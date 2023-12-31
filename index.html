@@ -155,6 +155,13 @@
                     <li><a href="#line4_3">Rewarded Ad</a></li>
                   </ul>
                 </li>
+                <li>
+                  <a href="#line5">How to call App open (Beta)</a>
+                  <ul class="nav">
+                    <li><a href="#line5_1">Load App Open Ad</a></li>
+                    <li><a href="#line5_2">Show AppOpen Ad</a></li>
+                  </ul>
+                </li>
               </ul>
             </nav>
           </div>
@@ -255,7 +262,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <p>
-                    Below are the steps to load and render a banner ad on your
+                    Below are the steps to load and render a banner Ad on your
                     app:
                   </p>
                   <ol>
@@ -553,7 +560,7 @@
                       <code>MediationNativeAd</code>
                       object to render an ad as shown in below example.
                       <pre class="brush: java">
-                        <!-- private void displayNativeAd(MediationNativeAd ad) {
+                        private void displayNativeAd(MediationNativeAd ad) {
                           // Create AdSter MediationNativeAdView object
                           MediationNativeAdView adView = new MediationNativeAdView(this);
                     
@@ -602,7 +609,7 @@
                           // Ad native ad view to container
                           container.removeAllViews();
                           container.addView(adView);
-                        } -->
+                        }
                       </pre>
                       Make sure to call <code>trackViews</code> and
                       <code>setNativeAd</code> method before adding
@@ -715,6 +722,90 @@
                         }
                     });
                   </pre>
+                </div>
+              </div>
+            </section>
+
+            <section id="line5" class="section">
+              <div class="row">
+                <div class="col-md-12 left-align">
+                  <h2 class="dark-text">
+                    App open (Beta)
+                    <hr />
+                  </h2>
+                  <p>
+                    AdSter sdk also gives the option to load and show AppOpen ad
+                    format which is the proprietary Ad format of google ad
+                    manager and AdMob. Implementation is similar to given in
+                    this document
+                    <a
+                      href="https://developers.google.com/admob/android/app-open"
+                      target="_blank"
+                      >https://developers.google.com/admob/android/app-open</a
+                    >. Instead of creating a new
+                    <code>AppOpenAdManager</code> mentioned in the document use
+                    method below provided by AdSter sdk and follow the
+                    implementation on Activity and Application class just like
+                    the document.
+                    <br />
+                    AdSter sdk provides methods to show and load app open ads.
+                  </p>
+                </div>
+              </div>
+
+              <h4 id="line5_1">Load App Open Ad</h4>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    Pass activity`s context and your placement name as arguments
+                    to <code>loadAppOpenAd</code> method
+                  </p>
+                  <pre class="brush: java">
+                    AdSter.INSTANCE.loadAppOpenAd(activity, new AdRequestConfiguration(activity, "Your_placement"), new AppOpenAdEventsListener() {
+                      @Override
+                        public void onAdLoaded() {
+                          super.onAdLoaded();
+                          // Here ad can be shown using a call to showAdIfAvailable method
+                        }
+                   
+                      @Override
+                        public void onAdLoadFailure(@NonNull AdError adError) {
+                          super.onAdLoadFailure(adError);
+                        }
+                    });
+                  </pre>
+                </div>
+              </div>
+
+              <hr />
+              <h4 id="line4_2">Show AppOpen Ad</h4>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    Pass activity`s context and your placement name as arguments
+                    to <code>loadAppOpenAd</code> method
+                  </p>
+                  <pre class="brush: java">
+                    AdSter.INSTANCE.showAdIfAvailable(activity, new AdRequestConfiguration(activity, "your_placement_id"), new AppOpenAdEventsListener() {
+                      @Override
+                        public void onShowAdComplete() {
+                          super.onShowAdComplete();
+                        }
+
+                      @Override
+                        public void onAdLoadFailure(@NonNull AdError adError) {
+                          super.onAdLoadFailure(adError);
+                        }
+                    });
+                  </pre>
+                  <p>
+                    This method will try to show an app open ad if already
+                    available. If not it calls loadAd internally to load an app
+                    open ad and wherever a new app open event occurs this method
+                    immediately shows the ad.
+                  </p>
                 </div>
               </div>
             </section>
