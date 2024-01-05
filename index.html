@@ -239,12 +239,21 @@
                     once initialization is complete. This needs to be done only
                     once, ideally at app launch. Below is an example
                   </p>
-                  <pre class="brush: java; highlight: [2]">
+                  <p><strong>For Java:</strong></p>
+                  <pre class="brush: java;">
                     AdSter.INSTANCE.initializeSdk(getApplicationContext(), adapterStatus -> {
                       // Initialization completes here
                     })
-                 </pre
-                  >
+                 </pre>
+                 <br />
+                 <p><strong>For Kotlin:</strong></p>
+                  <pre class="brush: java;">
+                    AdSter.initializeSdk(getApplicationContext(), object : InitializationListener {
+                      override fun onInitializationComplete(adapterStatus: List<AdapterStatus>) {
+
+                      }
+                    })
+                  </pre>
                 </div>
               </div>
             </section>
@@ -280,6 +289,7 @@
                     <li>
                       Call <code>loadAd()</code> method as per below format
                       <br />
+                      <p><strong>For Java:</strong></p>
                       <pre class="brush: java">
                         AdSter.INSTANCE.loadAd(configuration, new AdsEventListener() {
                           @Override
@@ -292,6 +302,18 @@
                               super.onFailure(adError);
                               // Handle failure here
                             }
+                        });
+                      </pre>
+                      <p><strong>For Kotlin:</strong></p>
+                      <pre class="brush: java">
+                        AdSter.loadAd(configuration, object : AdsEventListener() {
+                          override fun onBannerAdLoaded(ad: MediationBannerAd) {
+                            super.onBannerAdLoaded(ad)
+                            // Show banner ad here
+                          }
+                          override fun onFailure(adError: AdError) {
+                            // Handle failure here
+                          }
                         });
                       </pre>
                     </li>
@@ -334,6 +356,7 @@
                     <li>
                       Call <code>loadAd()</code> method as per below format
                       <br />
+                      <p><strong>For Java:</strong></p>
                       <pre class="brush: java">
                         AdSter.INSTANCE.loadAd(configuration, new AdsEventListener() {
                           @Override
@@ -347,6 +370,18 @@
                             }
                        });
                       </pre>
+                      <p><strong>For Kotlin:</strong></p>
+                      <pre class="brush: java">
+                        AdSter.loadAd(configuration, object : AdsEventListener() {
+                          override fun onInterstitialAdLoaded (ad: MediationInterstitialAd) {
+                            super. onInterstitialAdLoaded (ad)
+                            // Show Interstitial ad here
+                          }
+                          override fun onFailure(adError: AdError) {
+                            // Handle failure here
+                          }
+                        })
+                      </pre>
                     </li>
                     <li>
                       Inside the <code>onInterstitialAdLoaded</code> callback
@@ -354,12 +389,20 @@
                       <code>MediationInterstitialAd</code> object to show AdSter
                       interstitial ad above any activity as shown below
                       <br />
+                      <p><strong>For Java:</strong></p>
                       <pre class="brush: java">
                         @Override
                           public void onInterstitialAdLoaded(@NonNull MediationInterstitialAd ad) {
                             super.onInterstitialAdLoaded(ad);
                             ad.showAd(activity);
                           }
+                      </pre>
+                      <p><strong>For Kotlin:</strong></p>
+                      <pre class="brush: java">
+                        override fun onInterstitialAdLoaded (ad: MediationInterstitialAd) {
+                          super. onInterstitialAdLoaded (ad)
+                          ad.showAd(activity);
+                        }
                       </pre>
                       Make sure to pass only Activity`s context as parameter to
                       <code>showAd()</code>
@@ -388,18 +431,30 @@
                     <li>
                       Call <code>loadAd()</code> method as per below format
                       <br />
+                      <p><strong>For Java:</strong></p>
                       <pre class="brush: java">
                         AdSter.INSTANCE.loadAd(configuration, new AdsEventListener() {
                           @Override
                             public void onRewardedAdLoaded(@NonNull MediationRewardedAd ad) {
                               super.onRewardedAdLoaded(ad);
                             }
-                 
                           @Override
                             public void onFailure(@NonNull AdError adError) {
                               // Handle Failure here
                             }
-                       });
+                        });
+                      </pre>
+                      <p><strong>For Kotlin:</strong></p>
+                      <pre class="brush: java">
+                        AdSter.loadAd(configuration, object : AdsEventListener() {
+                          override fun onRewardedAdLoaded (ad: MediationRewardedAd) {
+                            super. onRewardedAdLoaded (ad)
+                            // Show Reward ad here
+                          }
+                          override fun onFailure(adError: AdError) {
+                            // Handle failure here
+                          }
+                        })
                       </pre>
                     </li>
                     <li>
@@ -408,12 +463,20 @@
                       <code>MediationRewardedAd</code> object to show AdSter
                       rewarded ad above any activity as shown below
                       <br />
+                      <p><strong>For Java:</strong></p>
                       <pre class="brush: java">
                         @Override
                           public void onInterstitialAdLoaded(@NonNull MediationRewardedlAd ad) {
                             super.onInterstitialAdLoaded(ad);
                             ad.showAd(activity);
                           }
+                      </pre>
+                      <p><strong>For Kotlin:</strong></p>
+                      <pre class="brush: java">
+                        override fun onRewardedAdLoaded (ad: MediationRewardedAd) {
+                          super. onRewardedAdLoaded (ad)
+                          ad.showAd(activity);
+                        }
                       </pre>
                       Make sure to pass only Activity`s context as parameter to
                       <code>showAd()</code>
@@ -442,6 +505,7 @@
                     <li>
                       Call <code>loadAd()</code> method as per below format
                       <br />
+                      <p><strong>For Java:</strong></p>
                       <pre class="brush: java">
                         AdSter.INSTANCE.loadAd(configuration, new AdsEventListener() {
                           @Override
@@ -453,7 +517,19 @@
                             public void onFailure(@NonNull AdError adError) {
                               // Handle Failure here
                             }
-                       });
+                        });
+                      </pre>
+                      <p><strong>For Kotlin:</strong></p>
+                      <pre class="brush: java">
+                        AdSter.loadAd(configuration, object : AdsEventListener() {
+                          override fun onNativeAdLoaded (ad: MediationNativeAd) {
+                            super. onNativeAdLoaded (ad)
+                            // Show Reward ad here
+                          }
+                          override fun onFailure(adError: AdError) {
+                            // Handle failure here
+                          }
+                        })
                       </pre>
                     </li>
                     <li>
@@ -562,6 +638,7 @@
                       Above sample layout can be used with the
                       <code>MediationNativeAd</code>
                       object to render an ad as shown in below example.
+                      <p><strong>For Java:</strong></p>
                       <pre class="brush: java">
                         private void displayNativeAd(MediationNativeAd ad) {
                           // Create AdSter MediationNativeAdView object
@@ -614,6 +691,58 @@
                           container.addView(adView);
                         }
                       </pre>
+                      <p><strong>For Kotlin:</strong></p>
+                      <pre class="brush: java">
+                        private fun displayNativeAd(ad: MediationNativeAd) {
+                          // Create AdSter MediationNativeAdView object
+                          val adView = MediationNativeAdView(this)
+                          // Add this layout as a parent to your native ad layout
+                          val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView)
+                          // Set native elements
+                          val title: TextView = adView.findViewById(R.id.titleTextView)
+                          val body: TextView = adView.findViewById(R.id.bodyTextView)
+                          val cta: Button = adView.findViewById(R.id.ctaButton)
+                          val logo: ImageView = adView.findViewById(R.id.iconLogoImageView)
+                          val choice: ImageView = adView.findViewById(R.id.choiceImageview)
+                          val info: TextView = adView.findViewById(R.id.infoTextView)
+                          // MediaView
+                          val mediaView: FrameLayout = nativeAdView.findViewById(R.id.mediaView)
+                      
+                          // If MediaView is present add AdSter's MediaView as a child to given MediaView
+                          if (ad.mediaView != null) {
+                              mediaView.addView(ad.mediaView)
+                          }
+                      
+                          adView.bodyView = body
+                          adView.headlineView = title
+                          adView.ctaView = cta
+                          adView.logoView = logo
+                          adView.advertiserView = info
+                          logo.visibility = View.VISIBLE
+                          // Load logo url using any Image loading library (Glide is just an example here)
+                          Glide.with(applicationContext).load(ad.logo).into(logo)
+                      
+                          // Set native ad elements with data
+                          title.text = ad.headLine
+                          body.text = ad.body
+                          cta.text = ad.callToAction
+                          info.text = ad.advertiser
+                      
+                          val map = HashMap<String, View>()
+                          map["headline"] = title
+                          map["body"] = body
+                          map["cta"] = cta
+                          map["advertiser"] = info
+                      
+                          // Send views to AdSter sdk for tracking click/impressionn etc.
+                          ad.trackViews(adView, null, map)
+                          // Set MediationNativeAd object
+                          adView.nativeAd = ad
+                          // Ad native ad view to container
+                          container.removeAllViews()
+                          container.addView(adView)
+                        }
+                      </pre>
                       Make sure to call <code>trackViews</code> and
                       <code>setNativeAd</code> method before adding
                       <code>MediationNativeAdView</code> to the container.
@@ -645,6 +774,7 @@
 
               <div class="row">
                 <div class="col-md-12">
+                  <p><strong>For Java:</strong></p>
                   <pre class="brush: java">
                     AdSter.INSTANCE.setAdListener(new AdEventsCallback() {
                       @Override
@@ -658,6 +788,17 @@
                         }
                     });
                   </pre>
+                  <p><strong>For Kotlin:</strong></p>
+                  <pre class="brush: java">
+                    AdSter.setAdListener(object : AdEventsCallback() {
+                      override fun onAdImpression() {
+                        // Called when Ad is getting impression  
+                      }
+                      override fun onAdClicked() {
+                        // Called when Ad is clicked
+                      }
+                    })
+                  </pre>
                 </div>
               </div>
 
@@ -666,6 +807,7 @@
 
               <div class="row">
                 <div class="col-md-12">
+                  <p><strong>For Java:</strong></p>
                   <pre class="brush: java">
                     AdSter.INSTANCE.setInterstitialAdListener(new InterstitialAdEventsCallback() {
                       @Override
@@ -689,6 +831,23 @@
                         }
                     });
                   </pre>
+                  <p><strong>For Kotlin:</strong></p>
+                  <pre class="brush: java">
+                    AdSter.setInterstitialAdListener(object : InterstitialAdEventsCallback() {
+                      override fun onAdClicked() {
+                        // Called when Ad is clicked
+                      }
+                      override fun onAdImpression() {
+                        // Called when Ad is getting impression  
+                      }
+                      override fun onAdOpened() {
+                        // Called when Ad is opened
+                      }
+                      override fun onAdClosed() {
+                        // Called when Ad is closed
+                      }
+                    });
+                  </pre>
                 </div>
               </div>
 
@@ -697,6 +856,7 @@
 
               <div class="row">
                 <div class="col-md-12">
+                  <p><strong>For Java:</strong></p>
                   <pre class="brush: java">
                     AdSter.INSTANCE.setRewardedAdListener(new RewardedAdEventsCallback() {
                       @Override
@@ -723,6 +883,26 @@
                         public void onVideoStart() {
                           // Called when rewarded video started.
                         }
+                    });
+                  </pre>
+                  <p><strong>For Kotlin:</strong></p>
+                  <pre class="brush: java">
+                    AdSter.setRewardedAdListener(object : RewardedAdEventsCallback() {
+                      override fun onUserEarnedReward(@NonNull reward: Reward) {
+                        // Called when user is eligible for a reward
+                      }
+                      override fun onAdClicked() {
+                        // Called when ad is clicked
+                      }
+                      override fun onAdImpression() {
+                        // Called when ad is getting impression
+                      }
+                      override fun onVideoComplete() {
+                        // Called when rewarded video completed
+                      }
+                      override fun onVideoStart() {
+                        // Called when rewarded video started.
+                      }
                     });
                   </pre>
                 </div>
@@ -764,6 +944,7 @@
                     Pass activity`s context and your placement name as arguments
                     to <code>loadAppOpenAd</code> method
                   </p>
+                  <p><strong>For Java:</strong></p>
                   <pre class="brush: java">
                     AdSter.INSTANCE.loadAppOpenAd(activity, new AdRequestConfiguration(activity, "Your_placement"), new AppOpenAdEventsListener() {
                       @Override
@@ -778,6 +959,22 @@
                         }
                     });
                   </pre>
+                  <p><strong>For Kotlin:</strong></p>
+                  <pre class="brush: java">
+                    AdSter.loadAppOpenAd(
+                      activity,
+                      AdRequestConfiguration(activity, "Your_placement"),
+                      object : AppOpenAdEventsListener() {
+                        override fun onAdLoaded() {
+                            super.onAdLoaded()
+                            // Here ad can be shown using a call to showAdIfAvailable method
+                        }
+
+                        override fun onAdLoadFailure(adError: AdError) {
+                            super.onAdLoadFailure(adError)
+                        }
+                    })
+                  </pre>
                 </div>
               </div>
 
@@ -790,6 +987,7 @@
                     Pass activity`s context and your placement name as arguments
                     to <code>loadAppOpenAd</code> method
                   </p>
+                  <p><strong>For Java:</strong></p>
                   <pre class="brush: java">
                     AdSter.INSTANCE.showAdIfAvailable(activity, new AdRequestConfiguration(activity, "your_placement_id"), new AppOpenAdEventsListener() {
                       @Override
@@ -800,6 +998,20 @@
                       @Override
                         public void onAdLoadFailure(@NonNull AdError adError) {
                           super.onAdLoadFailure(adError);
+                        }
+                    });
+                  </pre>
+                  <p><strong>For Kotlin:</strong></p>
+                  <pre class="brush: java">
+                    AdSter.showAdIfAvailable(
+                      activity,
+                      AdRequestConfiguration(activity, "your_placement_id"),
+                      object : AppOpenAdEventsListener() {
+                        override fun onShowAdComplete() {
+                          super.onShowAdComplete()
+                        }
+                        fun onAdLoadFailure(adError: AdError?) {
+                          super.onAdLoadFailure(adError!!)
                         }
                     });
                   </pre>
