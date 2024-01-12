@@ -200,24 +200,62 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <h4>Create a 'libs' Folder</h4>
+                  <h4>Setting Up Repository in Project</h4>
                   <ol>
-                    <li>
-                      In your main app directory <code>(src/main)</code>, create
-                      a <code>libs</code> folder.
-                    </li>
+                    <li>Open your Android Studio project and navigate to settings.gradle file</li>
                   </ol>
+                  <div><i><strong>Add the following Maven repository configuration inside the dependencyResolutionManagement block</strong></i></div>
+                  <pre class="brush: java;">
+                    gradel
 
-                  <h4>Add Dependency:</h4>
+                    repositories {
+                      ...
+                      maven {
+                        url = uri("https://maven.pkg.github.com/adster-tech/orchestration-sdk")
+                        credentials {
+                          username = GITHUB_USERNAME
+                          password = GITHUB_TOKEN
+                        }
+                      }
+                    }
+                  </pre>
+                  <div>Replace <code>GITHUB_USERNAME</code> and <code>GITHUB_TOKEN</code> with your GitHub username and personal access token.</div>
+                  <hr />
+                  <h4>Adding Dependency</h4>
                   <ol>
                     <li>
-                      Include the following dependency in your app-level
-                      <code>build.gradle</code> file:
+                      Open the <strong>build.gradle (Module: app)</strong> file.
+                    </li>
+                    <li>
+                      Find the dependencies block.
+                    </li>
+                    <li>
+                      Add the SDK dependency.
                     </li>
                   </ol>
-                  <div>
-                    <img src="images/configuration.png" alt="img" style="height: 500px;position: relative;left: 40px;" />
-                  </div>
+                  <pre class="brush: java;">
+                    gradle
+                    implementation 'com.adster:orchestrationsdk:1.0.2'
+                  </pre>
+                  <hr />
+                  <h4>Authentication</h4>
+                  <div>It's crucial not to hardcode GitHub credentials. Store credentials in <code>gradle.properties</code> or use environment variables.</div>
+                  <div><i><strong>In gradle.properties, add</strong></i></div>
+                  <pre class="brush: java;">
+                    properties
+
+                    GITHUB_USERNAME=username
+                    GITHUB_TOKEN=token
+                  </pre>
+                  <br />
+                  <div><i><strong>In settings.gradle, reference these properties:</strong></i></div>
+                  <pre class="brush: java;">
+                    gradle
+
+                    username = findProperty("GITHUB_USERNAME") ?: System.getenv("GITHUB_USERNAME")
+                    password = findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN")
+                  </pre>
+                  <div>This approach enhances security by keeping credentials out of source control.</div>
                 </div>
               </div>
             </section>
