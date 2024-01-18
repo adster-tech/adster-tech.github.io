@@ -162,6 +162,9 @@
                     <li><a href="#line5_2">Show AppOpen Ad</a></li>
                   </ul>
                 </li>
+                <li>
+                  <a href="#line6">How to render Unified Ad (Only for GAM)</a>
+                </li>
               </ul>
             </nav>
           </div>
@@ -301,7 +304,7 @@
               <div class="row">
                 <div class="col-md-12 left-align">
                   <h2 class="dark-text">
-                    How to Create an Ad
+                    How to Render an Ad
                     <hr />
                   </h2>
                 </div>
@@ -355,7 +358,7 @@
                         });
                       </pre>
                     </li>
-                    <li>
+                    <li id="onBannerAdLoaded">
                       Inside the <code>onBannerAdLoaded</code> callback method
                       invoke <code>getView()</code> method of
                       <code>MediationnBannerAd</code> object to add AdSter
@@ -570,7 +573,7 @@
                         })
                       </pre>
                     </li>
-                    <li>
+                    <li id="onNativeAdLoaded">
                       Inside the <code>onNativeAdLoaded</code> callback method
                       use <code>MediationNativeAd</code> object to display
                       native ad on your defined layout.
@@ -1059,6 +1062,84 @@
                     open ad and wherever a new app open event occurs this method
                     immediately shows the ad.
                   </p>
+                </div>
+              </div>
+            </section>
+
+            <section id="line6" class="section">
+              <div class="row">
+                <div class="col-md-12 left-align">
+                  <h2 class="dark-text">
+                    How to render Unified Ad (Only for GAM)
+                    <hr />
+                  </h2>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    Below are the steps to load and render a unified ad on your app:
+                  </p>
+                  <ol>
+                    <li>
+                      Create your <code>AdRequestConfiguration</code> as per
+                      below format
+                      <br />
+                      <pre class="brush: java">
+                        val configuration = AdRequestConfiguration(context, "Your_placement_name")
+                      </pre>
+                    </li>
+                    <li>
+                      Call <code>loadAd()</code> method as per below format
+                      <br />
+                      <pre class="brush: java">
+                      AdSter.INSTANCE.loadAd(configuration, new AdsEventListener() {
+                        @Override
+                          public void onNativeAdLoaded(@NonNull MediationNativeAd ad) {
+                            super.onNativeAdLoaded(ad);
+                          }
+
+                        @Override
+                          public void onBannerAdLoaded(@NonNull MediationBannerAd ad) {
+                            super.onBannerAdLoaded(ad);
+                          }
+              
+                          @Override
+                          public void onFailure(@NonNull AdError adError) {
+                            // Handle Failure here
+                          }
+                      });
+                      </pre>
+                      <code>onNativeAdLoaded()</code> - <a href="#onNativeAdLoaded">Click here</a> for Rendering implementation
+                      <br />
+                      <code>onBannerAdLoaded()</code> - <a href="#onBannerAdLoaded">Click here</a> for Rendering implementation
+                    </li>
+                  </ol>
+                </div>
+              </div>
+              <h4>Manifest Changes required for SDK</h4>
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    Please add these changes to the manifest of your application.
+                  </p>
+                  <pre class="brush: java">
+                  <uses-permission android:name="android.permission.INTERNET" />
+                  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+                  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+                  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+                  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+                  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+                  <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+                  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+                  </pre>
+                  <p><b>Note:</b> <i>If you don`t have an admob account and want to test the  initialisation of the SDK please also add these to the manifest so that the SDK initialization can complete.</i></p>
+                  <pre class="brush: java">
+                  <meta-data
+                    android:name="com.google.android.gms.ads.APPLICATION_ID"
+                    android:value="ca-app-pub-7640426597645136~3443205346" />        
+                  </pre>
                 </div>
               </div>
             </section>
