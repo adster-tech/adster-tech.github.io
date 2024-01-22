@@ -26,3 +26,7 @@
 ## Render Unified Ad (Only for GAM) <a href="#render-unified-ad" id="render-unified-ad"></a>
 
 * [🎨 Render Unified Ad (Only for GAM)](render-unified-ad/render-unified-ad-only-for-gam.md)
+
+***
+
+* [Manifest Changes Required for SDK](manifest-changes-required-for-sdk.md)
