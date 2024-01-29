@@ -1,8 +1,8 @@
 ---
-description: Below are the steps to load and show a native ad on your app
+description: Below are the steps to load and show a custom native ad on your app
 ---
 
-# 📪 Native Ad
+# 📪 Custom Native Ad
 
 1. Create your `AdRequestConfiguration` as per the below format
 
@@ -17,8 +17,8 @@ val configuration = AdRequestConfiguration(context,"Your_placement_name")
 ```java
 AdSter.INSTANCE.loadAd(configuration, new AdsEventListener() {
   @Override
-    public void onNativeAdLoaded(@NonNull MediationNativeAd ad) {
-      super.onNativeAdLoaded(ad);
+    public void onNativeCustomFormatAdLoaded(@NonNull MediationNativeCustomFormatAd ad) {
+      super.onNativeCustomFormatAdLoaded(ad);
     }
 
   @Override
@@ -32,8 +32,8 @@ AdSter.INSTANCE.loadAd(configuration, new AdsEventListener() {
 {% tab title="Kotlin" %}
 ```kotlin
 AdSter.loadAd(configuration, object : AdsEventListener() {
-  override fun onNativeAdLoaded (ad: MediationNativeAd) {
-    super. onNativeAdLoaded (ad)
+  override fun onNativeCustomFormatAdLoaded (ad: MediationNativeCustomFormatAd) {
+    super. onNativeCustomFormatAdLoaded (ad)
     // Show Reward ad here
   }
   override fun onFailure(adError: AdError) {
@@ -44,7 +44,7 @@ AdSter.loadAd(configuration, object : AdsEventListener() {
 {% endtab %}
 {% endtabs %}
 
-3. Inside the `onNativeAdLoaded` callback method use `MediationNativeAd` object to display native ad on your defined layout.
+3. Inside the `onNativeCustomFormatAdLoaded` callback method use `MediationNativeCustomFormatAd` object to display custom native ad on your defined layout.
 4. Define your native ad layout, below is just an example of a layout
 
 {% code overflow="wrap" %}
@@ -139,32 +139,23 @@ AdSter.loadAd(configuration, object : AdsEventListener() {
 ```
 {% endcode %}
 
-5. The above sample layout can be used with the `MediationNativeAd` object to render an ad as shown in the below example
+5. The above sample layout can be used with the `MediationNativeCustomFormatAd` object to render an ad as shown in the below example
 
 {% tabs %}
 {% tab title="Java" %}
 ```java
-private void displayNativeAd(MediationNativeAd ad) {
-  // Create AdSter MediationNativeAdView object
-  MediationNativeAdView adView = new MediationNativeAdView(this);
-
-  // Add this layout as a parent to your native ad layout
+private void displayNativeCustomFormatAd(MediationNativeCustomFormatAd ad){
+  MediationNativeAdView adView =new MediationNativeAdView(this);
   View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView);
-
-  // Set native elements
   TextView title = adView.findViewById(R.id.titleTextView);
   TextView body = adView.findViewById(R.id.bodyTextView);
   Button cta = adView.findViewById(R.id.ctaButton);
   ImageView logo = adView.findViewById(R.id.iconLogoImageView);
-  ImageView choice = adView.findViewById(R.id.choiceImageview);
   TextView info = adView.findViewById(R.id.infoTextView);
-  // MediaView
-  FrameLayout mediaView = nativeAdView.findViewById(R.id.mediaView);
 
-  // If MediaView is present add AdSter's MediaView as a child to given MediaView
-  if (ad.getMediaView() != null) {
-      mediaView.addView(ad.getMediaView());
-  }
+  ad.getDisplayOpenMeasurement();
+  ad.recordImpression();
+
   adView.setBodyView(body);
   adView.setHeadlineView(title);
   adView.setCtaView(cta);
@@ -172,88 +163,75 @@ private void displayNativeAd(MediationNativeAd ad) {
   adView.setAdvertiserView(info);
 
   logo.setVisibility(View.VISIBLE);
-  // Load logo url using any Image loading library (Glide is just an example here)
-  Glide.with(getApplicationContext()).load(ad.getLogo()).into(logo);
+  Glide.with(getApplicationContext()).load(ad.getImage("Image").getDrawable()).into(logo);
 
-  // Set native ad elements with data
-  title.setText(ad.getHeadLine());
-  body.setText(ad.getBody());
-  cta.setText(ad.getCallToAction());
-  info.setText(ad.getAdvertiser());
+  title.setText(ad.getText("Headline"));
+  body.setText(ad.getText("Body"));
+  cta.setText(ad.getText("Calltoaction"));
+  info.setText(ad.getText("Attribution"));
+
+  cta.setOnClickListener(new View.OnClickListener() {
+    @Override
+      public void onClick(View v) {
+        ad.performClick((String) Objects.requireNonNull(ad.getText("clickactionURL")));
+      }
+  });
 
   Map<String, View> map = new HashMap<>();
   map.put("headline", title);
   map.put("body", body);
   map.put("cta", cta);
   map.put("advertiser",info);
-  // Send views to AdSter sdk for tracking click/impressionn etc.
-  ad.trackViews(adView, null, map);
-  // Set MediationNativeAd object
-  adView.setNativeAd(ad);
-  // Ad native ad view to container
-  container.removeAllViews();
-  container.addView(adView);
+  bannerScroll.addView(nativeAdView);
 }
 ```
 {% endtab %}
 
 {% tab title="Kotlin" %}
 ```kotlin
-private fun displayNativeAd(ad: MediationNativeAd) {
-  // Create AdSter MediationNativeAdView object
+private fun displayNativeCustomFormatAd(ad: MediationNativeCustomFormatAd) {
   val adView = MediationNativeAdView(this)
-  // Add this layout as a parent to your native ad layout
-  val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView)
-  // Set native elements
+  val nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView)
   val title: TextView = adView.findViewById(R.id.titleTextView)
   val body: TextView = adView.findViewById(R.id.bodyTextView)
   val cta: Button = adView.findViewById(R.id.ctaButton)
   val logo: ImageView = adView.findViewById(R.id.iconLogoImageView)
-  val choice: ImageView = adView.findViewById(R.id.choiceImageview)
   val info: TextView = adView.findViewById(R.id.infoTextView)
-  // MediaView
-  val mediaView: FrameLayout = nativeAdView.findViewById(R.id.mediaView)
 
-  // If MediaView is present add AdSter's MediaView as a child to given MediaView
-  if (ad.mediaView != null) {
-      mediaView.addView(ad.mediaView)
-  }
+  ad.displayOpenMeasurement
+  ad.recordImpression()
 
   adView.bodyView = body
   adView.headlineView = title
   adView.ctaView = cta
   adView.logoView = logo
   adView.advertiserView = info
+
   logo.visibility = View.VISIBLE
-  // Load logo url using any Image loading library (Glide is just an example here)
-  Glide.with(applicationContext).load(ad.logo).into(logo)
+  Glide.with(applicationContext).load(ad.getImage("Image").getDrawable()).into(logo)
 
-  // Set native ad elements with data
-  title.text = ad.headLine
-  body.text = ad.body
-  cta.text = ad.callToAction
-  info.text = ad.advertiser
+  title.text = ad.getText("Headline")
+  body.text = ad.getText("Body")
+  cta.text = ad.getText("Calltoaction")
+  info.text = ad.getText("Attribution")
 
-  val map = HashMap<String, View>()
+  cta.setOnClickListener {
+    ad.performClick(ad.getText("clickactionURL").toString())
+  }
+
+  val map: MutableMap<String, View> = HashMap()
   map["headline"] = title
   map["body"] = body
   map["cta"] = cta
   map["advertiser"] = info
-
-  // Send views to AdSter sdk for tracking click/impressionn etc.
-  ad.trackViews(adView, null, map)
-  // Set MediationNativeAd object
-  adView.nativeAd = ad
-  // Ad native ad view to container
-  container.removeAllViews()
-  container.addView(adView)
+  bannerScroll.addView(nativeAdView)
 }
 ```
 {% endtab %}
 {% endtabs %}
 
 {% hint style="info" %}
-Make sure to call `trackViews` and `setNativeAd` method before adding `MediationNativeAdView` to the container.
+Make sure to call `trackViews` and `setAdvertiserView` method before adding `MediationNativeCustomFormatAd` to the container.
 {% endhint %}
 
-6. Call `MediationNativeAd.destroy` when activity or fragment is getting destroyed.
+6. Call `MediationNativeCustomFormatAd.destroy` when activity or fragment is getting destroyed.
