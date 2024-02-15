@@ -14,19 +14,14 @@
 * [📪 Native Ad](how-to-render-an-ad/native-ad.md)
 * [📪 Custom Native Ad](how-to-render-an-ad/native-ad-1.md)
 
-## Event Listeners
-
-* [📪 Banner and Native Ad](event-listeners/banner-and-native-ad.md)
-* [📪 Interstitial Ad](event-listeners/interstitial-ad.md)
-* [📪 Rewarded Ad](event-listeners/rewarded-ad.md)
-
 ## How to call App Open (Beta) <a href="#call-app-open" id="call-app-open"></a>
 
 * [🎨 App open (Beta)](call-app-open/app-open-beta.md)
 
-## Render Unified Ad (Only for GAM) <a href="#render-unified-ad" id="render-unified-ad"></a>
+## Feature's only for GAM <a href="#feature-only-for-gam" id="feature-only-for-gam"></a>
 
-* [🎨 Render Unified Ad (Only for GAM)](render-unified-ad/render-unified-ad-only-for-gam.md)
+* [🎨 Render Unified Ad (Only for GAM)](feature-only-for-gam/render-unified-ad-only-for-gam.md)
+* [🎨 Custom Ad Request (Only for GAM)](feature-only-for-gam/custom-ad-request-only-for-gam.md)
 
 ***
 

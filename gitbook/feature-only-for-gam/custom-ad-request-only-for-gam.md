@@ -1,16 +1,36 @@
 ---
-description: Below are the steps to load and render a banner Ad on your app
+description: >-
+  Below are the steps to make a custom ad request for GAM (Supported by all ad
+  formats)
 ---
 
-# 📪 Banner Ad
+# 🎨 Custom Ad Request (Only for GAM)
 
 1. Create your `AdRequestConfiguration` as per the below format
 
+{% code overflow="wrap" %}
 ```java
 val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
 ```
+{% endcode %}
 
-2. Call `loadAd()` method as per below format
+2. Adding Ad targeting parameters to AdRequest
+
+{% code overflow="wrap" %}
+```java
+configuration.addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
+             .addCustomTargetingValue("YOUR_KEY",List<String>)
+             .publisherProvidedId("YOUR_PPID");
+```
+{% endcode %}
+
+{% hint style="info" %}
+#### Custom ad request can be created for all the ad types.
+
+Here is an example of implementation with banner ad.
+{% endhint %}
+
+3. Call `loadAd()` method as per below format
 
 {% tabs %}
 {% tab title="Java" %}

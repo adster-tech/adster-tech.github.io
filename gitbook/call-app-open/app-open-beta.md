@@ -2,7 +2,13 @@
 
 AdSter SDK also gives the option to load and show AppOpen ad format which is the proprietary Ad format of Google Ad Manager and AdMob. Implementation is similar to that given in this document [https://developers.google.com/admob/android/app-open](https://developers.google.com/admob/android/app-open). Instead of creating a new `AppOpenAdManager` mentioned in the document use the method below provided by AdSter SDK and follow the implementation on the Activity and Application class just like the document. AdSter SDK provides methods to show and load app-open ads
 
+Create your `AdRequestConfiguration` as per the below format
 
+{% code overflow="wrap" %}
+```java
+val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
+```
+{% endcode %}
 
 ## Load App Open Ad
 
@@ -10,40 +16,38 @@ Pass the activity\`s context and your placement name as arguments to `loadAppOpe
 
 {% tabs %}
 {% tab title="Java" %}
-{% code overflow="wrap" %}
-```java
-AdSter.INSTANCE.loadAppOpenAd(activity, new AdRequestConfiguration(activity, "Your_placement"), new AppOpenAdEventsListener() {
-  @Override
+<pre class="language-java" data-overflow="wrap"><code class="lang-java"><strong>AdSter.INSTANCE.loadAppOpenAd(activity, configuration.build(), new AppOpenAdEventsListener() {
+</strong>    @Override
     public void onAdLoaded() {
-      super.onAdLoaded();
-      // Here ad can be shown using a call to showAdIfAvailable method
+        super.onAdLoaded();
+        // Here ad can be shown using a call to showAdIfAvailable method
     }
 
-  @Override
+    @Override
     public void onAdLoadFailure(@NonNull AdError adError) {
-      super.onAdLoadFailure(adError);
+        super.onAdLoadFailure(adError);
+        //Handle failure callback here
     }
 });
-```
-{% endcode %}
+</code></pre>
 {% endtab %}
 
 {% tab title="Kotlin" %}
 {% code overflow="wrap" %}
 ```kotlin
-AdSter.loadAppOpenAd(
-  activity,
-  AdRequestConfiguration(activity, "Your_placement"),
-  object : AppOpenAdEventsListener() {
-    override fun onAdLoaded() {
-        super.onAdLoaded()
-        // Here ad can be shown using a call to showAdIfAvailable method
-    }
+AdSter.loadAppOpenAd(activity, configuration.build(),
+    object : AppOpenAdEventsListener() {
+        override fun onAdLoaded() {
+            super.onAdLoaded()
+            // Here ad can be shown using a call to showAdIfAvailable method
+        }
 
-    override fun onAdLoadFailure(adError: AdError) {
-        super.onAdLoadFailure(adError)
+        override fun onAdLoadFailure(adError: AdError) {
+            super.onAdLoadFailure(adError)
+            //Handle failure callback here
+        } 
     }
-})
+)
 ```
 {% endcode %}
 {% endtab %}
@@ -59,15 +63,29 @@ Pass the activity\`s context and your placement name as arguments to `loadAppOpe
 {% tab title="Java" %}
 {% code overflow="wrap" %}
 ```java
-AdSter.INSTANCE.showAdIfAvailable(activity, new AdRequestConfiguration(activity, "your_placement_id"), new AppOpenAdEventsListener() {
-  @Override
+AdSter.INSTANCE.showAdIfAvailable(activity, configuration.build(), new AppOpenAdEventsListener() {
+    @Override
     public void onShowAdComplete() {
-      super.onShowAdComplete();
+        super.onShowAdComplete();
+        //Handle show ad complete here
     }
 
-  @Override
+    @Override
     public void onAdLoadFailure(@NonNull AdError adError) {
-      super.onAdLoadFailure(adError);
+        super.onAdLoadFailure(adError);
+        //Handle failure callback here
+    }
+
+    @Override
+    public void onAdImpression() {
+        super.onAdImpression();
+        //Handle impression here
+    }
+
+    @Override
+    public void onAdClicked() {
+        super.onAdClicked();
+        //Handle click here
     }
 });
 ```
@@ -77,17 +95,28 @@ AdSter.INSTANCE.showAdIfAvailable(activity, new AdRequestConfiguration(activity,
 {% tab title="Kotlin" %}
 {% code overflow="wrap" %}
 ```kotlin
-AdSter.showAdIfAvailable(
-  activity,
-  AdRequestConfiguration(activity, "your_placement_id"),
-  object : AppOpenAdEventsListener() {
-    override fun onShowAdComplete() {
-      super.onShowAdComplete()
-    }
-    fun onAdLoadFailure(adError: AdError?) {
-      super.onAdLoadFailure(adError!!)
-    }
-});
+AdSter.showAdIfAvailable(activity, configuration.build(),
+    object : AppOpenAdEventsListener() {
+        override fun onShowAdComplete() {
+            super.onShowAdComplete()
+            //Handle show ad complete here
+        }
+
+        override fun onAdLoadFailure(adError: AdError) {
+            super.onAdLoadFailure(adError)
+            //Handle failure callback here
+        }
+
+        override fun onAdImpression() {
+            super.onAdImpression()
+            //Handle impression here
+        }
+
+        override fun onAdClicked() {
+            super.onAdClicked()
+            //Handle click here
+        }
+    })
 ```
 {% endcode %}
 {% endtab %}

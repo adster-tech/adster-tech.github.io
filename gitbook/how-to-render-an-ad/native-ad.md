@@ -7,7 +7,7 @@ description: Below are the steps to load and show a native ad on your app
 1. Create your `AdRequestConfiguration` as per the below format
 
 ```java
-val configuration = AdRequestConfiguration(context,"Your_placement_name")
+val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
 ```
 
 2. Call `loadAd()` method as per below format
@@ -15,31 +15,51 @@ val configuration = AdRequestConfiguration(context,"Your_placement_name")
 {% tabs %}
 {% tab title="Java" %}
 ```java
-AdSter.INSTANCE.loadAd(configuration, new AdsEventListener() {
-  @Override
+AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
+    @Override
     public void onNativeAdLoaded(@NonNull MediationNativeAd ad) {
-      super.onNativeAdLoaded(ad);
+        super.onNativeAdLoaded(ad);
+        //Show native ad here
     }
 
-  @Override
+    @Override
     public void onFailure(@NonNull AdError adError) {
-      // Handle Failure here
+        //Handle failure callback here
     }
-});
+}).withAdsEventsListener(new AdEventsListener() {
+    @Override
+    public void onAdClicked() {
+        //Handle ad click here
+    }
+
+    @Override
+    public void onAdImpression() {
+        //Handle ad impression here
+    }
+}).build().loadAd(configuration.build());
 ```
 {% endtab %}
 
 {% tab title="Kotlin" %}
 ```kotlin
-AdSter.loadAd(configuration, object : AdsEventListener() {
-  override fun onNativeAdLoaded (ad: MediationNativeAd) {
-    super. onNativeAdLoaded (ad)
-    // Show Reward ad here
-  }
-  override fun onFailure(adError: AdError) {
-    // Handle failure here
-  }
-})
+AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
+    override fun onNativeAdLoaded(ad: MediationNativeAd) {
+        super.onNativeAdLoaded(ad)
+        //Show native ad here
+    }
+
+    override fun onFailure(adError: AdError) {
+        //Handle failure callback here
+    }
+}).withAdsEventsListener(object : AdEventsListener() {
+    override fun onAdClicked() {
+        //Handle ad click here
+    }
+
+    override fun onAdImpression() {
+        //Handle ad impression here
+    }
+}).build().loadAd(configuration.build())
 ```
 {% endtab %}
 {% endtabs %}
