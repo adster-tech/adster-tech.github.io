@@ -1,10 +1,10 @@
 ---
 description: >-
-  Below are the steps to make a custom ad request for GAM (Supported by all ad
-  formats)
+  Below are the steps to pass custom targeting value in ad request for GAM
+  (Supported by all ad formats)
 ---
 
-# 🎨 Custom Ad Request (Only for GAM)
+# 🎨 How to pass custom targeting values in ad request (Only for GAM)
 
 1. Create your `AdRequestConfiguration` as per the below format
 
@@ -14,15 +14,49 @@ val configuration = AdRequestConfiguration.Companion.builder(context, "Your_plac
 ```
 {% endcode %}
 
-2. Adding Ad targeting parameters to AdRequest
+2. Adding ad targeting parameters to AdRequest
 
-{% code overflow="wrap" %}
+<details>
+
+<summary>Single key with single value</summary>
+
 ```java
 configuration.addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
-             .addCustomTargetingValue("YOUR_KEY",List<String>)
-             .publisherProvidedId("YOUR_PPID");
 ```
-{% endcode %}
+
+</details>
+
+<details>
+
+<summary>Single key with multiple values</summary>
+
+```java
+configuration.addCustomTargetingValue("YOUR_KEY",List<String>)
+```
+
+</details>
+
+<details>
+
+<summary>Multiple keys with single value</summary>
+
+```java
+configuration.addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
+             .addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
+```
+
+</details>
+
+<details>
+
+<summary>Multiple keys with multiple values</summary>
+
+```java
+configuration.addCustomTargetingValue("YOUR_KEY",List<String>)
+             .addCustomTargetingValue("YOUR_KEY",List<String>)
+```
+
+</details>
 
 {% hint style="info" %}
 #### Custom ad request can be created for all the ad types.
