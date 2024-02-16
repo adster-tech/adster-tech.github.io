@@ -1,10 +1,10 @@
 ---
 description: >-
-  Below are the steps to pass custom targeting value in ad request for GAM
-  (Supported by all ad formats)
+  Below are the steps to pass predefined custom targeting value in ad request
+  for GAM (Supported by all ad formats)
 ---
 
-# 🎨 How to pass custom targeting values in ad request (Only for GAM)
+# 🎨 How to pass predefined custom targeting values in ad request (Only for GAM)
 
 1. Create your `AdRequestConfiguration` as per the below format
 
@@ -14,7 +14,7 @@ val configuration = AdRequestConfiguration.Companion.builder(context, "Your_plac
 ```
 {% endcode %}
 
-2. Adding ad targeting parameters to AdRequest
+2. Adding predefined ad targeting parameters to AdRequest
 
 <details>
 
