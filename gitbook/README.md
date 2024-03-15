@@ -10,7 +10,7 @@ description: >-
 {% hint style="info" %}
 **App Prerequisite**
 
-* minSdkVersion of 24 or higher
+* minSdkVersion of 21 or higher
 * compileSdkVersion of 33 or higher
 {% endhint %}
 
@@ -52,7 +52,7 @@ Replace GITHUB\_USERNAME and GITHUB\_TOKEN with your GitHub username and persona
 ```java
 gradle
 
-implementation 'com.adster:orchestrationsdk:1.0.5'
+implementation 'com.adster:orchestrationsdk:1.0.7'
 ```
 
 ***
