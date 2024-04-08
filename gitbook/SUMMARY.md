@@ -27,3 +27,4 @@
 ***
 
 * [Manifest Changes Required for SDK](manifest-changes-required-for-sdk.md)
+* [Update app-ads.txt & ads.txt](update-app-ads.txt-and-ads.txt.md)
