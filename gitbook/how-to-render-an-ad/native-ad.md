@@ -190,6 +190,8 @@ private void displayNativeAd(MediationNativeAd ad) {
   adView.setCtaView(cta);
   adView.setLogoView(logo);
   adView.setAdvertiserView(info);
+  
+  ad.recordImpression();
 
   logo.setVisibility(View.VISIBLE);
   // Load logo url using any Image loading library (Glide is just an example here)
@@ -253,6 +255,8 @@ private fun displayNativeAd(ad: MediationNativeAd) {
   body.text = ad.body
   cta.text = ad.callToAction
   info.text = ad.advertiser
+  
+  ad.recordImpression()
 
   val map = HashMap<String, View>()
   map["headline"] = title
