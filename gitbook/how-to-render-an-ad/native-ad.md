@@ -279,22 +279,30 @@ private fun displayNativeAd(ad: MediationNativeAd) {
 Make sure to call `trackViews` and `setNativeAd` method before adding `MediationNativeAdView` to the container.
 {% endhint %}
 
-{% hint style="warning" %}
-{% code fullWidth="true" %}
-```java
-"If you set attachToRoot as false for further customization of nativeAdView before displaying, make sure you attach it to parent afterwards."
-"In the example provided above it is already set to true."
-<Java>
-View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, false);
-parent.addView(nativeAdView); 
-<Kotlin>
-val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, true)
-parent.addView(nativeAdView) 
-
-
+{% hint style="info" %}
+{% code overflow="wrap" %}
+```
+If you set attachToRoot as false for further customization of nativeAdView before displaying, make sure you attach it to parent afterwards.
+In the example provided above it is already set to true.
 ```
 {% endcode %}
 {% endhint %}
+
+{% tabs %}
+{% tab title="Java" %}
+```javascript
+View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, false);
+parent.addView(nativeAdView); 
+```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, true)
+parent.addView(nativeAdView) 
+```
+{% endtab %}
+{% endtabs %}
 
 6. Call `MediationNativeAd.destroy` when activity or fragment is getting destroyed.
 
@@ -376,11 +384,24 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 {% endtab %}
 {% endtabs %}
 
-```java
-//Make sure that you set LayoutParams of your dynamicMediaView in accordance to parent layout herein Linear Layout.
-<Java>
-dynamicMediaView.setLayoutParams(new LinearLayout.LayoutParams(800, 600));
-<Kotlin>
-dynamicMediaView.layoutParams = LinearLayout.LayoutParams(800,600)
-
+{% hint style="info" %}
+{% code overflow="wrap" fullWidth="false" %}
 ```
+Make sure you set LayoutParams of your dynamicMediaView in accordance to parent layout herein Linear Layout.
+```
+{% endcode %}
+{% endhint %}
+
+{% tabs %}
+{% tab title="Java" %}
+```javascript
+dynamicMediaView.setLayoutParams(new LinearLayout.LayoutParams(800, 600));
+```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```python
+dynamicMediaView.layoutParams = LinearLayout.LayoutParams(800,600)
+```
+{% endtab %}
+{% endtabs %}
