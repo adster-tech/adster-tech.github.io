@@ -282,23 +282,19 @@ Make sure to call `trackViews` and `setNativeAd` method before adding `Mediation
 {% hint style="warning" %}
 {% code fullWidth="true" %}
 ```java
-// If you set attachToRoot as false for further customization of nativeAdView before displaying, make sure you attach it to parent afterwards.
-// In the example provided above it is already set to true.
+"If you set attachToRoot as false for further customization of nativeAdView before displaying, make sure you attach it to parent afterwards."
+"In the example provided above it is already set to true."
 <Java>
 View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, false);
 parent.addView(nativeAdView); 
 <Kotlin>
 val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, true)
 parent.addView(nativeAdView) 
+
+
 ```
 {% endcode %}
 {% endhint %}
-
-
-
-```
-View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView);
-```
 
 6. Call `MediationNativeAd.destroy` when activity or fragment is getting destroyed.
 
