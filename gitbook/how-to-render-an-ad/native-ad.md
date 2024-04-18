@@ -36,13 +36,12 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     public void onAdImpression() {
         //Handle ad impression here
     }
-}).build().loadAd(configuration.build());
+}).build().loadAd(configuration.build());AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 ```
 {% endtab %}
 
 {% tab title="Kotlin" %}
 ```kotlin
-AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
     override fun onNativeAdLoaded(ad: MediationNativeAd) {
         super.onNativeAdLoaded(ad)
         //Show native ad here
@@ -169,7 +168,7 @@ private void displayNativeAd(MediationNativeAd ad) {
   MediationNativeAdView adView = new MediationNativeAdView(this);
 
   // Add this layout as a parent to your native ad layout
-  View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView);
+  View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, true);
 
   // Set native elements
   TextView title = adView.findViewById(R.id.titleTextView);
@@ -225,7 +224,7 @@ private fun displayNativeAd(ad: MediationNativeAd) {
   // Create AdSter MediationNativeAdView object
   val adView = MediationNativeAdView(this)
   // Add this layout as a parent to your native ad layout
-  val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView)
+  val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, true)
   // Set native elements
   val title: TextView = adView.findViewById(R.id.titleTextView)
   val body: TextView = adView.findViewById(R.id.bodyTextView)
@@ -280,4 +279,112 @@ private fun displayNativeAd(ad: MediationNativeAd) {
 Make sure to call `trackViews` and `setNativeAd` method before adding `MediationNativeAdView` to the container.
 {% endhint %}
 
+{% hint style="warning" %}
+{% code fullWidth="true" %}
+```java
+// If you set attachToRoot as false for further customization of nativeAdView before displaying, make sure you attach it to parent afterwards.
+// In the example provided above it is already set to true.
+<Java>
+View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, false);
+parent.addView(nativeAdView); 
+<Kotlin>
+val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, true)
+parent.addView(nativeAdView) 
+```
+{% endcode %}
+{% endhint %}
+
+
+
+```
+View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView);
+```
+
 6. Call `MediationNativeAd.destroy` when activity or fragment is getting destroyed.
+
+***
+
+### Native Ad in Dynamic Layout
+
+{% tabs %}
+{% tab title="Java" %}
+```java
+AdSterAdLoader.Builder builder = new AdSterAdLoader.Builder()
+        .withAdsListener(new MediationAdListener() {
+            @Override
+            public void onNativeAdLoaded(MediationNativeAd ad) {
+                super.onNativeAdLoaded(ad);
+
+                // Instantiating the dynamicMediaView Object
+                FrameLayout dynamicMediaView = new FrameLayout(YourActivity.this);
+
+                // Set the Width and Height based on your requirement
+                dynamicMediaView.setLayoutParams(new LinearLayout.LayoutParams(800, 600));
+
+                if (ad.getMediaView() != null) {
+                    dynamicMediaView.addView(ad.getMediaView());
+                    linearLayout.addView(dynamicMediaView);
+                }
+            }
+
+            @Override
+            public void onFailure(AdError adError) {
+                // Handle failure callback here
+            }
+        })
+        .withAdsEventsListener(new AdEventsListener() {
+            @Override
+            public void onAdClicked() {
+                // Handle ad click here
+            }
+
+            @Override
+            public void onAdImpression() {
+                // Handle ad impression here
+            }
+        });
+
+AdSterAdLoader adLoader = builder.build();
+adLoader.loadAd(nativeConfiguration3.build());
+```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
+    override fun onNativeAdLoaded(ad: MediationNativeAd) {
+        super.onNativeAdLoaded(ad)
+        //Instantiating the dynamicMediaView Object
+        val dynamicMediaView = FrameLayout(this@YourActivity)
+        //Set the Width and Height based on your requirement
+        dynamicMediaView.layoutParams = LinearLayout.LayoutParams(800,600)
+        if (ad.mediaView != null) {
+            dynamicMediaView.addView(ad.mediaView)
+            linearLayout.addView(dynamicMediaView)
+        }
+    }
+
+    override fun onFailure(adError: AdError) {
+        //Handle failure callback here
+    }
+}).withAdsEventsListener(object : AdEventsListener() {
+    override fun onAdClicked() {
+        //Handle ad click here
+    }
+
+    override fun onAdImpression() {
+        //Handle ad impression here
+    }
+}).build().loadAd(nativeConfiguration3.build())
+```
+{% endtab %}
+{% endtabs %}
+
+```java
+//Make sure that you set LayoutParams of your dynamicMediaView in accordance to parent layout herein Linear Layout.
+<Java>
+dynamicMediaView.setLayoutParams(new LinearLayout.LayoutParams(800, 600));
+<Kotlin>
+dynamicMediaView.layoutParams = LinearLayout.LayoutParams(800,600)
+
+```

@@ -12,6 +12,7 @@
 * [📪 Interstitial Ad](how-to-render-an-ad/interstitial-ad.md)
 * [📪 Rewarded Ad](how-to-render-an-ad/rewarded-ad.md)
 * [📪 Native Ad](how-to-render-an-ad/native-ad.md)
+* [📪 Video ad](how-to-render-an-ad/video-ad.md)
 * [📪 Custom Native Ad](how-to-render-an-ad/native-ad-1.md)
 
 ## How to call App Open (Beta) <a href="#call-app-open" id="call-app-open"></a>
