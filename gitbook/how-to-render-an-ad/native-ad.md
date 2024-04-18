@@ -280,12 +280,10 @@ Make sure to call `trackViews` and `setNativeAd` method before adding `Mediation
 {% endhint %}
 
 {% hint style="info" %}
-{% code overflow="wrap" %}
 ```
 If you set attachToRoot as false for further customization of nativeAdView before displaying, make sure you attach it to parent afterwards.
 In the example provided above it is already set to true.
 ```
-{% endcode %}
 {% endhint %}
 
 {% tabs %}
@@ -385,7 +383,7 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 {% endtabs %}
 
 {% hint style="info" %}
-{% code overflow="wrap" fullWidth="false" %}
+{% code fullWidth="false" %}
 ```
 Make sure you set LayoutParams of your dynamicMediaView in accordance to parent layout herein Linear Layout.
 ```
