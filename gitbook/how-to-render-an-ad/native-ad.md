@@ -36,12 +36,13 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     public void onAdImpression() {
         //Handle ad impression here
     }
-}).build().loadAd(configuration.build());AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
+}).build().loadAd(configuration.build());
 ```
 {% endtab %}
 
 {% tab title="Kotlin" %}
 ```kotlin
+AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {    
     override fun onNativeAdLoaded(ad: MediationNativeAd) {
         super.onNativeAdLoaded(ad)
         //Show native ad here
