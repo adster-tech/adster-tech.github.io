@@ -177,9 +177,6 @@ private void displayNativeCustomFormatAd(MediationNativeCustomFormatAd ad){
   ImageView logo = adView.findViewById(R.id.iconLogoImageView);
   TextView info = adView.findViewById(R.id.infoTextView);
 
-  ad.getDisplayOpenMeasurement();
-  ad.recordImpression();
-
   adView.setBodyView(body);
   adView.setHeadlineView(title);
   adView.setCtaView(cta);
@@ -221,9 +218,6 @@ private fun displayNativeCustomFormatAd(ad: MediationNativeCustomFormatAd) {
   val cta: Button = adView.findViewById(R.id.ctaButton)
   val logo: ImageView = adView.findViewById(R.id.iconLogoImageView)
   val info: TextView = adView.findViewById(R.id.infoTextView)
-
-  ad.displayOpenMeasurement
-  ad.recordImpression()
 
   adView.bodyView = body
   adView.headlineView = title
