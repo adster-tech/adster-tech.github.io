@@ -20,6 +20,7 @@
 
 ## Feature's only for GAM <a href="#feature-only-for-gam" id="feature-only-for-gam"></a>
 
+* [🎨 Adaptive Banner Ad (Only for GAM)](feature-only-for-gam/adaptive-banner-ad-only-for-gam.md)
 * [🎨 Render Unified Ad (Only for GAM)](feature-only-for-gam/render-unified-ad-only-for-gam.md)
 * [🎨 How to pass predefined custom targeting values in ad request (Only for GAM)](feature-only-for-gam/how-to-pass-predefined-custom-targeting-values-in-ad-request-only-for-gam.md)
 * [🎨 How to pass publisher provided identifiers in ad request (PPID) (Only for GAM)](feature-only-for-gam/how-to-pass-publisher-provided-identifiers-in-ad-request-ppid-only-for-gam.md)

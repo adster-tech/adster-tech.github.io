@@ -19,7 +19,11 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     @Override
     public void onNativeCustomFormatAdLoaded(@NonNull MediationNativeCustomFormatAd ad) {
         super.onNativeCustomFormatAdLoaded(ad);
-        //Show native custom format ad here
+        if(ad.getCustomFormatId() == "123456"){
+            // Show native custom format for template Id 123456
+        } else if (ad.getCustomFormatId() == "654321") {
+            // Show native custom format for template Id 654321
+        }
     }
 
     @Override
