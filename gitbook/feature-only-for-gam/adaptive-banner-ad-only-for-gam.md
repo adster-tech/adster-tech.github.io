@@ -31,7 +31,7 @@ configuration.addInlineAdaptiveBannerAdSize(width, maxHeight);
 <summary>Current orientation inline adaptive banner ad</summary>
 
 ```java
-configuration.addCurrentOrientationInlineAdaptiveBannerAdSize(widht);
+configuration.addCurrentOrientationInlineAdaptiveBannerAdSize(width);
 ```
 
 </details>
