@@ -84,14 +84,13 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 
 {% tabs %}
 {% tab title="Java" %}
-```java
-@Override
-public void onInterstitialAdLoaded(@NonNull MediationInterstitialAd ad) {
+<pre class="language-java"><code class="lang-java"><strong>@Override
+</strong>public void onInterstitialAdLoaded(@NonNull MediationInterstitialAd ad) {
      super.onInterstitialAdLoaded(ad);
      ad.showAd(getApplicationContext());
   }
 
-```
+</code></pre>
 {% endtab %}
 
 {% tab title="Kotlin" %}

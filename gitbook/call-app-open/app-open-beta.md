@@ -4,50 +4,91 @@ AdSter SDK also gives the option to load and show AppOpen ad format which is the
 
 Create your `AdRequestConfiguration` as per the below format
 
-{% code overflow="wrap" %}
-```java
-val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
-```
-{% endcode %}
+<pre class="language-java" data-overflow="wrap"><code class="lang-java"><strong>val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
+</strong></code></pre>
 
 ## Load App Open Ad
 
-Pass the activity\`s context and your placement name as arguments to `loadAppOpenAd` method
+Call `loadAd()` method as per below format
 
 {% tabs %}
 {% tab title="Java" %}
-<pre class="language-java" data-overflow="wrap"><code class="lang-java"><strong>AdSter.INSTANCE.loadAppOpenAd(activity, configuration.build(), new AppOpenAdEventsListener() {
-</strong>    @Override
-    public void onAdLoaded() {
-        super.onAdLoaded();
-        // Here ad can be shown using a call to showAdIfAvailable method
+{% code overflow="wrap" %}
+```java
+AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
+    @Override
+    public void onFailure(@NonNull AdError adError) {
+        //Handle failure callback here
     }
 
     @Override
-    public void onAdLoadFailure(@NonNull AdError adError) {
-        super.onAdLoadFailure(adError);
-        //Handle failure callback here
+    public void onAppOpenAdLoaded(@NonNull MediationAppOpenAd ad) {
+        super.onAppOpenAdLoaded(ad);
+        //Show App Open Ad here
     }
-});
-</code></pre>
+}).withAppOpenAdEventsListener(new AppOpenAdEventsListener() {
+    @Override
+    public void onAdClicked() {
+        // Callback when ad is clicked
+    }
+
+    @Override
+    public void onAdImpression() {
+        // Callback when ad is shown
+    }
+
+    @Override
+    public void onAdOpened() {
+        // Callback when ad is opened
+    }
+
+    @Override
+    public void onAdClosed() {
+        // Callback when ad is cloed
+    }
+
+    @Override
+    public void onFailure(@Nullable AdError adError) {
+        // Calback when there is failure
+    }
+}).build().loadAd(configuration.build());
+```
+{% endcode %}
 {% endtab %}
 
 {% tab title="Kotlin" %}
 {% code overflow="wrap" %}
 ```kotlin
-AdSter.loadAppOpenAd(activity, configuration.build(),
-    object : AppOpenAdEventsListener() {
-        override fun onAdLoaded() {
-            super.onAdLoaded()
-            // Here ad can be shown using a call to showAdIfAvailable method
-        }
-
-        override fun onAdLoadFailure(adError: AdError) {
-            super.onAdLoadFailure(adError)
-            //Handle failure callback here
-        } 
+AdSterAdLoader.builder().withAdsListener(object : MediationAdListener(){
+    override fun onAppOpenAdLoaded(ad: MediationAppOpenAd) {
+        super.onAppOpenAdLoaded(ad)
+        // Show App Open Ad here
     }
-)
+    override fun onFailure(adError: AdError) {
+        //Handle failure callback here
+    }
+
+}).withAppOpenAdEventsListener(object : AppOpenAdEventsListener(){
+    override fun onAdClicked() {
+        // Handle Ad clicked here
+    }
+
+    override fun onAdClosed() {
+        // Handle Ad closed here
+    }
+
+    override fun onAdImpression() {
+        // Handle Ad impression here
+    }
+
+    override fun onAdOpened() {
+        // Handle Ad Open here
+    }
+
+    override fun onFailure(adError: AdError?) {
+        // Handle Ad Failure here
+    }
+}).build().loadAd(configuration.build())
 ```
 {% endcode %}
 {% endtab %}
@@ -57,71 +98,26 @@ AdSter.loadAppOpenAd(activity, configuration.build(),
 
 ## Show AppOpen Ad
 
-Pass the activity\`s context and your placement name as arguments to `loadAppOpenAd` method.
+Inside the `onAppOpenAdLoaded` callback method invoke `showAd(activity)` method of `MediationAppOpenAd` object to show AdSter App Open ad above any activity as shown below
 
 {% tabs %}
 {% tab title="Java" %}
 {% code overflow="wrap" %}
 ```java
-AdSter.INSTANCE.showAdIfAvailable(activity, configuration.build(), new AppOpenAdEventsListener() {
-    @Override
-    public void onShowAdComplete() {
-        super.onShowAdComplete();
-        //Handle show ad complete here
-    }
-
-    @Override
-    public void onAdLoadFailure(@NonNull AdError adError) {
-        super.onAdLoadFailure(adError);
-        //Handle failure callback here
-    }
-
-    @Override
-    public void onAdImpression() {
-        super.onAdImpression();
-        //Handle impression here
-    }
-
-    @Override
-    public void onAdClicked() {
-        super.onAdClicked();
-        //Handle click here
-    }
-});
+@Override
+public void onAppOpenAdLoaded(@NonNull MediationAppOpenAd ad) {
+    super.onAppOpenAdLoaded(ad);
+    ad.showAd(activity);
+}
 ```
 {% endcode %}
 {% endtab %}
 
 {% tab title="Kotlin" %}
-{% code overflow="wrap" %}
-```kotlin
-AdSter.showAdIfAvailable(activity, configuration.build(),
-    object : AppOpenAdEventsListener() {
-        override fun onShowAdComplete() {
-            super.onShowAdComplete()
-            //Handle show ad complete here
-        }
-
-        override fun onAdLoadFailure(adError: AdError) {
-            super.onAdLoadFailure(adError)
-            //Handle failure callback here
-        }
-
-        override fun onAdImpression() {
-            super.onAdImpression()
-            //Handle impression here
-        }
-
-        override fun onAdClicked() {
-            super.onAdClicked()
-            //Handle click here
-        }
-    })
-```
-{% endcode %}
+<pre class="language-kotlin" data-overflow="wrap"><code class="lang-kotlin">override fun onAppOpenAdLoaded(ad: MediationAppOpenAd) {
+<strong>    super.onAppOpenAdLoaded(ad)
+</strong>    ad.showAd(activity)
+}
+</code></pre>
 {% endtab %}
 {% endtabs %}
-
-{% hint style="info" %}
-This method will try to show an app open ad if already available. If not, it calls `loadAd` internally to load an app-open ad and wherever a new app-open event occurs this method immediately shows the ad.
-{% endhint %}
