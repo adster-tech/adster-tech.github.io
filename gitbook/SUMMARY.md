@@ -1,6 +1,7 @@
 # Table of contents
 
 * [📱 SDK Implementation Guide](README.md)
+* [TEST AD UNITS](test-ad-units.md)
 
 ## How to Configure
 
