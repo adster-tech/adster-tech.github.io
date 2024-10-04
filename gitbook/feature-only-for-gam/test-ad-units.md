@@ -1,10 +1,8 @@
----
-description: >-
-  Sample test adunits by Adster to ensure Ads are coming and is displayed inAPP
-  by the developers.
----
-
 # TEST AD UNITS
+
+Sample test adunits by Adster to ensure Ads are coming and is displayed inAPP by the developers.&#x20;
+
+
 
 Adster\_Unified\_Test (can respond with either banner or native ads)
 
@@ -22,8 +20,5 @@ Adster\_FS\_Unified\_Test (will respond with native or banner like 320x480 ads o
 
 E.g.&#x20;
 
-```
-val configuration = AdRequestConfiguration.Companion.builder(context, "Adster_Banner_Test");
-```
+val configuration = AdRequestConfiguration.Companion.builder(context, "Adster\_Banner\_Test");
 
-1. \

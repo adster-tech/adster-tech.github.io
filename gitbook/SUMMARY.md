@@ -1,7 +1,6 @@
 # Table of contents
 
 * [📱 SDK Implementation Guide](README.md)
-* [TEST AD UNITS](test-ad-units.md)
 
 ## How to Configure
 
@@ -25,6 +24,7 @@
 * [🎨 Render Unified Ad (Only for GAM)](feature-only-for-gam/render-unified-ad-only-for-gam.md)
 * [🎨 How to pass predefined custom targeting values in ad request (Only for GAM)](feature-only-for-gam/how-to-pass-predefined-custom-targeting-values-in-ad-request-only-for-gam.md)
 * [🎨 How to pass publisher provided identifiers in ad request (PPID) (Only for GAM)](feature-only-for-gam/how-to-pass-publisher-provided-identifiers-in-ad-request-ppid-only-for-gam.md)
+* [TEST AD UNITS](feature-only-for-gam/test-ad-units.md)
 
 ***
 
