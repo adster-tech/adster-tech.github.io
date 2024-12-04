@@ -70,91 +70,119 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 {% code overflow="wrap" %}
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-    
-    <!-- Icon Logo -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <!-- Choice Logo -->
     <ImageView
-      android:id="@+id/iconLogoImageView"
-      android:layout_width="54dp"
-      android:layout_height="54dp"
-      android:visibility="gone"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent"
-      />
-    
-    <!-- choice Logo -->
-    <ImageView
-      android:id="@+id/choiceImageview"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:visibility="visible"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      />
-    
-    <FrameLayout
-        android:id="@+id/mediaView"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-    
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
-    
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Sample Title"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-    
-    <!-- Body -->
-    <TextView
-        android:id="@+id/bodyTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Sample Body Text"
-        android:textSize="14sp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
-    <TextView
-        android:id="@+id/infoTextView"
-        android:layout_width="wrap_content"
+        android:id="@+id/choiceImageview"
+        android:layout_width="20dp"
         android:layout_height="20dp"
-        android:text="Sample advertiser name"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bodyTextView" />
-    
-    <!-- CTA Button -->
-    <Button
-        android:id="@+id/ctaButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Learn More"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/infoTextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Media View -->
+        <FrameLayout
+            android:id="@+id/mediaView"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_weight="6" />
+
+        <LinearLayout
+            android:id="@+id/textLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Sample Title"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <!-- Body -->
+            <TextView
+                android:id="@+id/bodyTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Sample Body Text"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <!-- Info -->
+            <TextView
+                android:id="@+id/infoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:text="Sample Advertiser Text"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Icon Logo -->
+                <ImageView
+                    android:id="@+id/iconLogoImageView"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside" />
+
+                <!-- Rating Bar -->
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:lines="1"
+                    android:numStars="5"
+                    android:stepSize="0.1" />
+            </LinearLayout>
+
+            <!-- CTA Button -->
+            <Button
+                android:id="@+id/ctaButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Learn More" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 {% endcode %}
@@ -178,6 +206,7 @@ private void displayNativeAd(MediationNativeAd ad) {
   ImageView logo = adView.findViewById(R.id.iconLogoImageView);
   ImageView choice = adView.findViewById(R.id.choiceImageview);
   TextView info = adView.findViewById(R.id.infoTextView);
+  RatingBar ratingBar = adView.findViewById(R.id.ratingBar);
   // MediaView
   FrameLayout mediaView = nativeAdView.findViewById(R.id.mediaView);
 
@@ -190,6 +219,7 @@ private void displayNativeAd(MediationNativeAd ad) {
   adView.setCtaView(cta);
   adView.setLogoView(logo);
   adView.setAdvertiserView(info);
+  adView.setRatingBarView(ratingBar);
 
   logo.setVisibility(View.VISIBLE);
   // Load logo url using any Image loading library (Glide is just an example here)
@@ -198,6 +228,9 @@ private void displayNativeAd(MediationNativeAd ad) {
   // Set native ad elements with data
   title.setText(ad.getHeadLine());
   body.setText(ad.getBody());
+  if(ad.getStarRating()!=null){
+    ratingBar.setRating(ad.getStarRating().floatValue());
+  }
   cta.setText(ad.getCallToAction());
   info.setText(ad.getAdvertiser());
 
@@ -231,6 +264,7 @@ private fun displayNativeAd(ad: MediationNativeAd) {
   val logo: ImageView = adView.findViewById(R.id.iconLogoImageView)
   val choice: ImageView = adView.findViewById(R.id.choiceImageview)
   val info: TextView = adView.findViewById(R.id.infoTextView)
+  val ratingBar : RaringBar = adView.findViewById(R.id.ratingBar)
   // MediaView
   val mediaView: FrameLayout = nativeAdView.findViewById(R.id.mediaView)
 
@@ -244,6 +278,7 @@ private fun displayNativeAd(ad: MediationNativeAd) {
   adView.ctaView = cta
   adView.logoView = logo
   adView.advertiserView = info
+  adView.ratingBarView = ratingBar
   logo.visibility = View.VISIBLE
   // Load logo url using any Image loading library (Glide is just an example here)
   Glide.with(applicationContext).load(ad.logo).into(logo)
@@ -253,6 +288,7 @@ private fun displayNativeAd(ad: MediationNativeAd) {
   body.text = ad.body
   cta.text = ad.callToAction
   info.text = ad.advertiser
+  starRating?.let { ratingBar.rating = it.toFloat() }
 
   val map = HashMap<String, View>()
   map["headline"] = title
