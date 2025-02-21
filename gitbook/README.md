@@ -39,7 +39,7 @@ repositories {
 ```
 
 {% hint style="warning" %}
-Replace GITHUB\_USERNAME and GITHUB\_TOKEN with your GitHub username and personal access token.
+Replace GITHUB\_USERNAME and GITHUB\_TOKEN with your GitHub username and personal access token (create a classic token with read only access from your personal GitHub profile OR reach out to us to get an Adster token)
 {% endhint %}
 
 ***
