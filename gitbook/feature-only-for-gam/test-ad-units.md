@@ -4,21 +4,21 @@ Sample test adunits by Adster to ensure Ads are coming and is displayed inAPP by
 
 
 
-Adster\_Unified\_Test (can respond with either banner or native ads)
+adster\_banner\_320x50&#x20;
 
-Adster\_Native\_Test (will respond with native ads only)
+adster\_banner\_300x250&#x20;
 
-Adster\_Banner\_Test (will respond with banner ads only)
+adster\_native\_test&#x20;
 
-Adster\_Appopen\_Test (will respond with APPOpen ads only)
+adster\_appopen\_test&#x20;
 
-Adster\_Interstitial\_Test (will respond with Interstitial ads only)
+adster\_interstitial\_test&#x20;
 
-Adster\_FS\_Native\_Test (will respond with native ads only for full screen opportunity, in case of swipe actions)&#x20;
+adster\_unified\_test&#x20;
 
-Adster\_FS\_Unified\_Test (will respond with native or banner like 320x480 ads only for full screen opportunity, in case of swipe actions) )
+adster\_rewarded\_test
 
 E.g.&#x20;
 
-val configuration = AdRequestConfiguration.Companion.builder(context, "Adster\_Banner\_Test");
+val configuration = AdRequestConfiguration.Companion.builder(context, "adster\_banner\_300x250");
 
