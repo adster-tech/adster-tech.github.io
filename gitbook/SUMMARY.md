@@ -17,6 +17,7 @@
 ## How to call App Open (Beta) <a href="#call-app-open" id="call-app-open"></a>
 
 * [🎨 App open (Beta)](call-app-open/app-open-beta.md)
+* [🎨 In-stream Video (Beta)](call-app-open/in-stream-video-beta.md)
 
 ## Feature's only for GAM <a href="#feature-only-for-gam" id="feature-only-for-gam"></a>
 
