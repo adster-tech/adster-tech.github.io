@@ -14,10 +14,10 @@
 * [📪 Native Ad](how-to-render-an-ad/native-ad.md)
 * [📪 Custom Native Ad](how-to-render-an-ad/native-ad-1.md)
 
-## How to call App Open (Beta) <a href="#call-app-open" id="call-app-open"></a>
+## Beta Ad Format's
 
-* [🎨 App open (Beta)](call-app-open/app-open-beta.md)
-* [🎨 In-stream Video (Beta)](call-app-open/in-stream-video-beta.md)
+* [🎨 App open (Beta)](beta-ad-formats/app-open-beta.md)
+* [🎨 In-stream Video (Beta)](beta-ad-formats/in-stream-video-beta.md)
 
 ## Feature's only for GAM <a href="#feature-only-for-gam" id="feature-only-for-gam"></a>
 
