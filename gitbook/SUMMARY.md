@@ -8,6 +8,7 @@
 
 ## How to Render an Ad
 
+* [📪 App Open](how-to-render-an-ad/app-open.md)
 * [📪 Banner Ad](how-to-render-an-ad/banner-ad.md)
 * [📪 Interstitial Ad](how-to-render-an-ad/interstitial-ad.md)
 * [📪 Rewarded Ad](how-to-render-an-ad/rewarded-ad.md)
@@ -16,7 +17,6 @@
 
 ## Beta Ad Format's
 
-* [🎨 App open (Beta)](beta-ad-formats/app-open-beta.md)
 * [🎨 In-stream Video (Beta)](beta-ad-formats/in-stream-video-beta.md)
 * [🎨 Banner Video (Beta)](beta-ad-formats/banner-video-beta.md)
 
