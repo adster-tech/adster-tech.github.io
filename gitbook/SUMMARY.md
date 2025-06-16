@@ -18,6 +18,7 @@
 
 * [🎨 App open (Beta)](beta-ad-formats/app-open-beta.md)
 * [🎨 In-stream Video (Beta)](beta-ad-formats/in-stream-video-beta.md)
+* [🎨 Banner Video (Beta)](beta-ad-formats/banner-video-beta.md)
 
 ## Feature's only for GAM <a href="#feature-only-for-gam" id="feature-only-for-gam"></a>
 
