@@ -52,7 +52,7 @@ Replace GITHUB\_USERNAME and GITHUB\_TOKEN with your GitHub username and persona
 ```java
 gradle
 
-implementation 'com.adster:orchestrationsdk:1.3.17'
+implementation 'com.adster:orchestrationsdk:1.3.25'
 ```
 
 ***
