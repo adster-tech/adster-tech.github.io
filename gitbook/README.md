@@ -22,5 +22,5 @@ description: >-
 * Find the dependencies block and add the following SDK dependency.
 
 ```gradle
-implementation 'com.adstertech:orchestrationsdk:2.1.2'
+implementation 'com.adstertech:orchestrationsdk:2.1.3'
 ```
