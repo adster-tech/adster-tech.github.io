@@ -10,6 +10,24 @@ description: Below are the steps to load and show an Interstitial ad on your app
 val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
 ```
 
+{% tabs %}
+{% tab title="Java" %}
+{% code overflow="wrap" %}
+```java
+AdRequestConfiguration.Builder configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Kotlin" %}
+{% code overflow="wrap" %}
+```kotlin
+val configuration = AdRequestConfiguration.builder(context, "Your_placement_name")
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
 2. Call `loadAd()` method as per below format
 
 {% tabs %}
@@ -46,6 +64,11 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener(){
     public void onAdClosed() {
         //Handle ad closed here
     }
+    
+    @Override
+    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId,@NotNull String network) {
+        // Callback which provides revenue and the network which provided it
+    }
 }).build().loadAd(configuration.build());
 ```
 {% endtab %}
@@ -65,17 +88,23 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
     override fun onAdClicked() {
         //Handle ad click here
     }
+    
     override fun onAdImpression() {
         //Handle ad impression here
     }
+    
     override fun onAdOpened() {
         //Handle ad open here
     }
+    
     override fun onAdClosed() {
         //Handle ad close here
     }
+    
+    override fun onAdRevenuePaid(revenue: Double, adUnitId: String, network: String) {
+        // Callback which provides revenue and the network which provided it
+    }
 }).build().loadAd(configuration.build())
-
 ```
 {% endtab %}
 {% endtabs %}

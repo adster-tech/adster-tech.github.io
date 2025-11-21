@@ -4,8 +4,23 @@ AdSter SDK also gives the option to load and show AppOpen ad format which is the
 
 Create your `AdRequestConfiguration` as per the below format
 
-<pre class="language-java" data-overflow="wrap"><code class="lang-java"><strong>val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
-</strong></code></pre>
+{% tabs %}
+{% tab title="Java" %}
+{% code overflow="wrap" expandable="true" %}
+```java
+AdRequestConfiguration.Builder configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Kotlin" %}
+{% code overflow="wrap" %}
+```kotlin
+val configuration = AdRequestConfiguration.builder(context, "Your_placement_name")
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 ## Load App Open Ad
 
@@ -13,7 +28,6 @@ Call `loadAd()` method as per below format
 
 {% tabs %}
 {% tab title="Java" %}
-{% code overflow="wrap" %}
 ```java
 AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     @Override
@@ -49,15 +63,18 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
 
     @Override
     public void onFailure(@Nullable AdError adError) {
-        // Calback when there is failure
+        // Callback when there is failure
+    }
+    
+    @Override
+    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId,@NotNull String network) {
+        // Callback which provides revenue and the network which provided it
     }
 }).build().loadAd(configuration.build());
 ```
-{% endcode %}
 {% endtab %}
 
 {% tab title="Kotlin" %}
-{% code overflow="wrap" %}
 ```kotlin
 AdSterAdLoader.builder().withAdsListener(object : MediationAdListener(){
     override fun onAppOpenAdLoaded(ad: MediationAppOpenAd) {
@@ -88,9 +105,12 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener(){
     override fun onFailure(adError: AdError?) {
         // Handle Ad Failure here
     }
+    
+    override fun onAdRevenuePaid(revenue: Double, adUnitId: String, network: String) {
+        // Callback which provides revenue and the network which provided it
+    }
 }).build().loadAd(configuration.build())
 ```
-{% endcode %}
 {% endtab %}
 {% endtabs %}
 

@@ -4,7 +4,7 @@
 
 ## How to Configure
 
-* [💡 Initialising the SDK](how-to-configure/initialising-the-sdk.md)
+* [💡 Initializing the SDK](how-to-configure/initializing-the-sdk.md)
 
 ## How to Render an Ad
 
