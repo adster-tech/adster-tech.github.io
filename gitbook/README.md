@@ -21,6 +21,8 @@ description: >-
 * Open the `build.gradle` (Module: app) file.
 * Find the dependencies block and add the following SDK dependency.
 
-```gradle
-implementation 'com.adstertech:orchestrationsdk-lite:2.1.4'
+{% code fullWidth="true" %}
 ```
+implementation 'com.adstertech:orchestrationsdk-lite:2.2.0'
+```
+{% endcode %}
