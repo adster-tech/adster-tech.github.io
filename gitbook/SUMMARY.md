@@ -30,5 +30,4 @@
 
 ***
 
-* [Manifest Changes Required for SDK](manifest-changes-required-for-sdk.md)
 * [Integrate Ads & APP Ads For Easy Management](integrate-ads-and-app-ads-for-easy-management.md)
