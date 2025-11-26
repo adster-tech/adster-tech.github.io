@@ -8,11 +8,23 @@ description: >-
 
 1. Create your `AdRequestConfiguration` as per the below format
 
+{% tabs %}
+{% tab title="Java" %}
 {% code overflow="wrap" %}
 ```java
-val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
+AdRequestConfiguration.Builder configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="Kotlin" %}
+{% code overflow="wrap" %}
+```kotlin
+val configuration = AdRequestConfiguration.builder(context, "Your_placement_name")
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 2. Adding predefined ad targeting parameters to AdRequest
 
@@ -21,7 +33,7 @@ val configuration = AdRequestConfiguration.Companion.builder(context, "Your_plac
 <summary>Single key with single value</summary>
 
 ```java
-configuration.addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
+configuration.addCustomTargetingValue("YOUR_KEY","YOUR_VALUE");
 ```
 
 </details>
@@ -31,7 +43,7 @@ configuration.addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
 <summary>Single key with multiple values</summary>
 
 ```java
-configuration.addCustomTargetingValue("YOUR_KEY",List<String>)
+configuration.addCustomTargetingValue("YOUR_KEY",List<String>);
 ```
 
 </details>
@@ -42,7 +54,7 @@ configuration.addCustomTargetingValue("YOUR_KEY",List<String>)
 
 ```java
 configuration.addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
-             .addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
+             .addCustomTargetingValue("YOUR_KEY","YOUR_VALUE");
 ```
 
 </details>
@@ -53,7 +65,7 @@ configuration.addCustomTargetingValue("YOUR_KEY","YOUR_VALUE")
 
 ```java
 configuration.addCustomTargetingValue("YOUR_KEY",List<String>)
-             .addCustomTargetingValue("YOUR_KEY",List<String>)
+             .addCustomTargetingValue("YOUR_KEY",List<String>);
 ```
 
 </details>
@@ -90,6 +102,11 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     public void onAdImpression() {
         //Handle ad impression here
     }
+    
+    @Override
+    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId, @NotNull String network) {
+        // Callback which provides revenue and the network which provided it
+    }
 }).build().loadAd(configuration.build());
 ```
 {% endtab %}
@@ -109,8 +126,13 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
     override fun onAdClicked() {
         //Handle ad click here
     }
+    
     override fun onAdImpression() {
         //Handle ad impression here
+    }
+    
+    override fun onAdRevenuePaid(revenue: Double, adUnitId: String, network: String) {
+        // Callback which provides revenue and the network which provided it
     }
 }).build().loadAd(configuration.build())
 ```
