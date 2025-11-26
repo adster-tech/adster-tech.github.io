@@ -14,6 +14,24 @@ description: >-
 * compileSdkVersion of 33 or higher
 {% endhint %}
 
+## **Manifest Changes Required for SDK**
+
+Please add these changes to the manifest of your application
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+```
+
+{% hint style="warning" %}
+If you don't have an admob account and want to test the initialization of the SDK, please also add these to the manifest so that the SDK initialization can be completed.
+{% endhint %}
+
+```xml
+<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
+android:value="ca-app-pub-3940256099942544~3347511713" />
+```
+
 ## Configuration Steps
 
 **Adding Dependency**
@@ -23,6 +41,6 @@ description: >-
 
 {% code fullWidth="true" %}
 ```
-implementation 'com.adstertech:orchestrationsdk-lite:2.2.0'
+implementation 'com.adstertech:orchestrationsdk-lite:2.2.1'
 ```
 {% endcode %}
