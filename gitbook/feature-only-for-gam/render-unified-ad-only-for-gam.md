@@ -6,12 +6,6 @@ description: Below are the steps to load and render a unified ad on your app
 
 1. Create your `AdRequestConfiguration` as per the below format
 
-{% code overflow="wrap" %}
-```java
-val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
-```
-{% endcode %}
-
 {% tabs %}
 {% tab title="Java" %}
 {% code overflow="wrap" %}
