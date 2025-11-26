@@ -8,11 +8,23 @@ description: >-
 
 1. Create your `AdRequestConfiguration` as per the below format
 
+{% tabs %}
+{% tab title="Java" %}
 {% code overflow="wrap" %}
 ```java
-val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
+AdRequestConfiguration.Builder configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
 ```
 {% endcode %}
+{% endtab %}
+
+{% tab title="Kotlin" %}
+{% code overflow="wrap" %}
+```kotlin
+val configuration = AdRequestConfiguration.builder(context, "Your_placement_name")
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 2. Adding preferred adaptive ad type to AdRequest
 
@@ -47,8 +59,11 @@ configuration.addAnchoredAdaptiveBannerAdSize(getAdSize());
 </details>
 
 {% hint style="info" %}
-#### Use the below code to get ad size for anchored adaptive banner ad request :
+Use the below code to get ad size for anchored adaptive banner ad request :
+{% endhint %}
 
+{% tabs %}
+{% tab title="Java" %}
 ```java
 private Integer getAdSize() {
     DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
@@ -63,7 +78,25 @@ private Integer getAdSize() {
     return (int) (adWidthPixels / density);
 }
 ```
-{% endhint %}
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+fun getAdSize(): Int {
+    val displayMetrics = getResources().displayMetrics
+    var adWidthPixels = displayMetrics.widthPixels
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowMetrics = this.windowManager.currentWindowMetrics
+        adWidthPixels = windowMetrics.bounds.width()
+    }
+
+    val density = displayMetrics.density
+    return (adWidthPixels / density).toInt()
+}
+```
+{% endtab %}
+{% endtabs %}
 
 3. Call `loadAd()` method as per below format
 
@@ -91,6 +124,11 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     public void onAdImpression() {
         //Handle ad impression here
     }
+    
+    @Override
+    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId, @NotNull String network) {
+        // Callback which provides revenue and the network which provided it
+    }
 }).build().loadAd(configuration.build());
 ```
 {% endtab %}
@@ -110,8 +148,13 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
     override fun onAdClicked() {
         //Handle ad click here
     }
+    
     override fun onAdImpression() {
         //Handle ad impression here
+    }
+    
+    override fun onAdRevenuePaid(revenue: Double, adUnitId: String, network: String) {
+        // Callback which provides revenue and the network which provided it
     }
 }).build().loadAd(configuration.build())
 ```
