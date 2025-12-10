@@ -38,6 +38,8 @@ android:value="ca-app-pub-3940256099942544~3347511713" />
 
 * Open the `build.gradle` (Module: app) file.
 * Find the dependencies block and add the following SDK dependency.
+* Add these proguard rules / lines in the final release build\
+  -keep class com.adster.\*\* { \*; }
 
 {% code fullWidth="true" %}
 ```
