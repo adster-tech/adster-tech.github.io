@@ -23,45 +23,21 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
 
     @Override
     public void onFailure (@NonNull AdError adError){ }
-}).withBannerVideoAdEventsListener(new BannerVideoAdEventsListener() {
+}).withAdsEventsListener(new AdEventsListener() {
     @Override
-    public void onAdPaused() { }
+    public void onAdClicked() {
+        //Handle ad click here
+    }
 
     @Override
-    public void onAdPlayed() { }
+    public void onAdImpression() {
+        //Handle ad impression here
+    }
     
     @Override
-    public void onAdResumed() { }
-
-    @Override
-    public void onAdStopped() { }
-
-    @Override
-    public void onAdSkipped() { }
-
-    @Override
-    public void onVolumeChanged(int volumeDelta){ }
-
-    @Override
-    public void onAllAdCompleted() { }
-
-    @Override
-    public void onContentPauseRequested() { }
-
-    @Override
-    public void onContentResumeRequested() { }
-
-    @Override
-    public void onAdClicked() { }
-
-    @Override
-    public void onAdLoadFailure(@NonNull AdError adError){ }
-
-    @Override
-    public void onAdTapped() { }
-
-    @Override
-    public void onSkippableStateChanged() { }
+    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId,@NotNull String network) {
+        // Callback which provides revenue and the network which provided it
+    }
 }).build().loadAd(configuration.build());
 ```
 {% endcode %}
