@@ -43,6 +43,6 @@ android:value="ca-app-pub-3940256099942544~3347511713" />
 
 {% code fullWidth="true" %}
 ```
-implementation 'com.adstertech:orchestrationsdk-lite:2.2.1'
+implementation 'com.adstertech:orchestrationsdk-lite:2.2.3'
 ```
 {% endcode %}
