@@ -18,7 +18,7 @@ AdRequestConfiguration.Builder configuration = AdRequestConfiguration.Companion.
 {% tab title="Kotlin" %}
 {% code overflow="wrap" %}
 ```kotlin
-val configuration = AdRequestConfiguration.builder(context, "Your_placement_name")v
+val configuration = AdRequestConfiguration.builder(context, "Your_placement_name");
 ```
 {% endcode %}
 {% endtab %}
