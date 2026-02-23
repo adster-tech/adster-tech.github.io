@@ -4,21 +4,21 @@ Sample test adunits by Adster to ensure Ads are coming and is displayed inAPP by
 
 
 
-adster\_banner\_320x50&#x20;
+banner\_320x50&#x20;
 
-adster\_banner\_300x250&#x20;
+banner\_300x250&#x20;
 
-adster\_native\_test&#x20;
+native&#x20;
 
-adster\_appopen\_test&#x20;
+appopen&#x20;
 
-adster\_interstitial\_test&#x20;
+interstitial&#x20;
 
-adster\_unified\_test&#x20;
+unified&#x20;
 
-adster\_rewarded\_test
+rewarded
 
 E.g.&#x20;
 
-val configuration = AdRequestConfiguration.Companion.builder(context, "adster\_banner\_300x250");
+val configuration = AdRequestConfiguration.Companion.builder(context, "banner\_300x250");
 
