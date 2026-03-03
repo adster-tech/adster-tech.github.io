@@ -18,5 +18,5 @@ Rewarded - <mark style="color:$success;">**`rewarded`**</mark>
 
 
 
-Placement example  :point\_down:\
+Placement code snippet  :point\_down:\
 val configuration = AdRequestConfiguration.Companion.builder(context, "<mark style="color:$success;">**`banner_300x250`**</mark>");
