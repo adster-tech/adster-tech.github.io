@@ -89,9 +89,22 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 
 3. Inside the `onBannerAdLoaded` callback method invoke `getView()` method of `MediationnBannerAd` object to add an AdSter banner view to the given layout as shown below
 
+{% tabs %}
+{% tab title="Java" %}
 ```java
 container.removeAllViews();
 container.addView(ad.getView());
 ```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+binding.container.apply {
+  removeAllViews()
+  addView(ad.view)
+}
+```
+{% endtab %}
+{% endtabs %}
 
 4. Call `MediationBannerAd.destroy()` When activity/fragment is destroyed or detached.
