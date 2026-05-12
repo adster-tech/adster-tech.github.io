@@ -20,13 +20,13 @@
 * [🎨 In-stream Video (Beta)](beta-ad-formats/in-stream-video-beta.md)
 * [🎨 Banner Video (Beta)](beta-ad-formats/banner-video-beta.md)
 
-## Feature's only for GAM <a href="#feature-only-for-gam" id="feature-only-for-gam"></a>
+## Additional Features
 
-* [🎨 Adaptive Banner Ad (Only for GAM)](feature-only-for-gam/adaptive-banner-ad-only-for-gam.md)
-* [🎨 Render Unified Ad (Only for GAM)](feature-only-for-gam/render-unified-ad-only-for-gam.md)
-* [🎨 How to pass predefined custom targeting values in ad request (Only for GAM)](feature-only-for-gam/how-to-pass-predefined-custom-targeting-values-in-ad-request-only-for-gam.md)
-* [🎨 How to pass publisher provided identifiers in ad request (PPID) (Only for GAM)](feature-only-for-gam/how-to-pass-publisher-provided-identifiers-in-ad-request-ppid-only-for-gam.md)
-* [TEST AD UNITS](feature-only-for-gam/test-ad-units.md)
+* [🎨 Adaptive Banner Ad (Only for GAM)](additional-features/adaptive-banner-ad-only-for-gam.md)
+* [🎨 Render Unified Ad (Only for GAM)](additional-features/render-unified-ad-only-for-gam.md)
+* [🎨 How to pass predefined custom targeting values in ad request](additional-features/how-to-pass-predefined-custom-targeting-values-in-ad-request.md)
+* [🎨 How to pass publisher provided identifiers in ad request (PPID)](additional-features/how-to-pass-publisher-provided-identifiers-in-ad-request-ppid.md)
+* [TEST AD UNITS](additional-features/test-ad-units.md)
 
 ***
 

@@ -1,10 +1,10 @@
 ---
 description: >-
   Below are the steps to pass predefined custom targeting value in ad request
-  for GAM (Supported by all ad formats)
+  (Supported by all ad formats)
 ---
 
-# 🎨 How to pass predefined custom targeting values in ad request (Only for GAM)
+# 🎨 How to pass predefined custom targeting values in ad request
 
 1. Create your `AdRequestConfiguration` as per the below format
 
