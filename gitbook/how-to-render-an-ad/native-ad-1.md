@@ -120,16 +120,6 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
       app:layout_constraintTop_toTopOf="parent"
       />
     
-    <FrameLayout
-        android:id="@+id/mediaView"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-    
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
