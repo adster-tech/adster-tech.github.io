@@ -4,7 +4,7 @@ description: >-
   formats)
 ---
 
-# 🎨 How to pass publisher provided identifiers in ad request (PPID) (Only for GAM)
+# 🎨 How to pass publisher provided identifiers in ad request (PPID)
 
 1. Create your `AdRequestConfiguration` as per the below format
 
@@ -68,7 +68,7 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     }
     
     @Override
-    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId, @NotNull String network) {
+    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId, @NotNull String network, @NotNull String currency, @NotNull PrecisionType precisionType) {
         // Callback which provides revenue and the network which provided it
     }
 }).build().loadAd(configuration.build());
@@ -95,7 +95,7 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
         //Handle ad impression here
     }
     
-    override fun onAdRevenuePaid(revenue: Double, adUnitId: String, network: String) {
+    override fun onAdRevenuePaid(revenue: Double, adUnitId: String, network: String, currency: String, precisionType: PrecisionType) {
         // Callback which provides revenue and the network which provided it
     }
 }).build().loadAd(configuration.build())

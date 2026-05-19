@@ -35,7 +35,7 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     }
     
     @Override
-    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId,@NotNull String network) {
+    public void onAdRevenuePaid(double revenue, @NotNull String adUnitId,@NotNull String network, @NotNull String currency, @NotNull PrecisionType precisionType) {
         // Callback which provides revenue and the network which provided it
     }
 }).build().loadAd(configuration.build());
@@ -76,6 +76,15 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     override fun onAdTapped() { }
 
     override fun onSkippableStateChanged() { }
+    
+    override fun onAdRevenuePaid(
+        revenue: Double,
+        adUnitId: String,
+        network: String,
+        currency: String,
+        precisionType: PrecisionType
+    ) {
+    }
 }).build().loadAd(configuration.build())
 </code></pre>
 {% endtab %}
