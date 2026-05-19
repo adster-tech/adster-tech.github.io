@@ -210,12 +210,7 @@ private void displayNativeCustomFormatAd(MediationNativeCustomFormatAd ad){
         ad.performClick((String) Objects.requireNonNull(ad.getText("clickactionURL")));
       }
   });
-
-  Map<String, View> map = new HashMap<>();
-  map.put("headline", title);
-  map.put("body", body);
-  map.put("cta", cta);
-  map.put("advertiser",info);
+  
   bannerScroll.addView(nativeAdView);
 }
 ```
@@ -249,12 +244,7 @@ private fun displayNativeCustomFormatAd(ad: MediationNativeCustomFormatAd) {
   cta.setOnClickListener {
     ad.performClick(ad.getText("clickactionURL").toString())
   }
-
-  val map: MutableMap<String, View> = HashMap()
-  map["headline"] = title
-  map["body"] = body
-  map["cta"] = cta
-  map["advertiser"] = info
+  
   bannerScroll.addView(nativeAdView)
 }
 ```
