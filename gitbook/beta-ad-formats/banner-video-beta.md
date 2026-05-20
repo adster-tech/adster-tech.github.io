@@ -50,33 +50,15 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     }
 
     override fun onFailure(adError: AdError) { }
-}).withBannerVideoAdEventsListener(object : VideoAdEventsListener() {
-    override fun onAdPaused() { }
+}).withAdsEventsListener(object : AdEventsListener(){
+    override fun onAdClicked() {
+        //Handle ad click here
+    }
 
-    override fun onAdPlayed() { }
-    
-    override fun onAdResumed() { }
+    override fun onAdImpression() {
+        //Handle ad impression here
+    }
 
-    override fun onAdStopped() { }
-
-    override fun onAdSkipped() { }
-
-    override fun onVolumeChanged(volumeDelta: Int) { }
-
-    override fun onAllAdCompleted() { }
-
-    override fun onContentPauseRequested() { }
-
-    override fun onContentResumeRequested() { }
-
-    override fun onAdClicked() { }
-
-    override fun onAdLoadFailure(adError: AdError) { }
-
-    override fun onAdTapped() { }
-
-    override fun onSkippableStateChanged() { }
-    
     override fun onAdRevenuePaid(
         revenue: Double,
         adUnitId: String,
@@ -84,6 +66,7 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
         currency: String,
         precisionType: PrecisionType
     ) {
+        // Callback which provides revenue and the network which provided it
     }
 }).build().loadAd(configuration.build())
 </code></pre>
