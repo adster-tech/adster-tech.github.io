@@ -212,11 +212,12 @@ private void displayNativeCustomFormatAd(MediationNativeCustomFormatAd ad){
   cta.setOnClickListener(new View.OnClickListener() {
     @Override
       public void onClick(View v) {
-        ad.performClick((String) Objects.requireNonNull(ad.getText("clickactionURL")));
+        ad.performClick("Calltoaction");
       }
   });
   
   bannerScroll.addView(nativeAdView);
+  ad.recordImpression();
 }
 ```
 {% endtab %}
@@ -247,10 +248,11 @@ private fun displayNativeCustomFormatAd(ad: MediationNativeCustomFormatAd) {
   info.text = ad.getText("Attribution")
 
   cta.setOnClickListener {
-    ad.performClick(ad.getText("clickactionURL").toString())
+    ad.performClick("Calltoaction")
   }
   
   bannerScroll.addView(nativeAdView)
+  ad.recordImpression()
 }
 ```
 {% endtab %}
