@@ -1,8 +1,8 @@
 ---
-description: Below are the steps to load and show a native ad on your app
+description: Below are the steps to load and show multiple native ads on your app.
 ---
 
-# 📪 Copy of Native Ad
+# 📪 Carousel Native Ad
 
 1. Create your `AdRequestConfiguration` as per the below format
 
@@ -31,9 +31,12 @@ val configuration = AdRequestConfiguration.builder(context, "Your_placement_name
 ```java
 AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     @Override
-    public void onNativeAdLoaded(@NonNull MediationNativeAd ad) {
-        super.onNativeAdLoaded(ad);
-        //Show native ad here
+    public void onCarouselNativeAdLoaded(@NonNull MediationCarouselNativeAd ad) {
+        // To get the ads
+        for (MediationNativeAd nativeAd : ad.getAds()) {
+            displayNativeAd(nativeAd);
+            //Show native ad here
+        }
     }
 
     @Override
@@ -62,9 +65,11 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
 {% tab title="Kotlin" %}
 ```kotlin
 AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {    
-    override fun onNativeAdLoaded(ad: MediationNativeAd) {
-        super.onNativeAdLoaded(ad)
-        //Show native ad here
+    override fun onCarouselNativeAdLoaded(ad: MediationCarouselNativeAd) {
+        // To get the ads
+        for(nativeAd in ad.ads){
+            displayNativeAd(nativeAd)
+        }
     }
 
     override fun onFailure(adError: AdError) {
@@ -359,103 +364,3 @@ parent.addView(nativeAdView)
 {% endtabs %}
 
 6. Call `MediationNativeAd.destroy` when activity or fragment is getting destroyed.
-
-***
-
-### Native Ad in Dynamic Layout
-
-{% tabs %}
-{% tab title="Java" %}
-```java
-AdSterAdLoader.Builder builder = new AdSterAdLoader.Builder()
-        .withAdsListener(new MediationAdListener() {
-            @Override
-            public void onNativeAdLoaded(MediationNativeAd ad) {
-                super.onNativeAdLoaded(ad);
-
-                // Instantiating the dynamicMediaView Object
-                FrameLayout dynamicMediaView = new FrameLayout(YourActivity.this);
-
-                // Set the Width and Height based on your requirement
-                dynamicMediaView.setLayoutParams(new LinearLayout.LayoutParams(800, 600));
-
-                if (ad.getMediaView() != null) {
-                    dynamicMediaView.addView(ad.getMediaView());
-                    linearLayout.addView(dynamicMediaView);
-                }
-            }
-
-            @Override
-            public void onFailure(AdError adError) {
-                // Handle failure callback here
-            }
-        })
-        .withAdsEventsListener(new AdEventsListener() {
-            @Override
-            public void onAdClicked() {
-                // Handle ad click here
-            }
-
-            @Override
-            public void onAdImpression() {
-                // Handle ad impression here
-            }
-        });
-
-AdSterAdLoader adLoader = builder.build();
-adLoader.loadAd(nativeConfiguration3.build());
-```
-{% endtab %}
-
-{% tab title="Kotlin" %}
-```kotlin
-AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
-    override fun onNativeAdLoaded(ad: MediationNativeAd) {
-        super.onNativeAdLoaded(ad)
-        //Instantiating the dynamicMediaView Object
-        val dynamicMediaView = FrameLayout(this@YourActivity)
-        //Set the Width and Height based on your requirement
-        dynamicMediaView.layoutParams = LinearLayout.LayoutParams(800,600)
-        if (ad.mediaView != null) {
-            dynamicMediaView.addView(ad.mediaView)
-            linearLayout.addView(dynamicMediaView)
-        }
-    }
-
-    override fun onFailure(adError: AdError) {
-        //Handle failure callback here
-    }
-}).withAdsEventsListener(object : AdEventsListener() {
-    override fun onAdClicked() {
-        //Handle ad click here
-    }
-
-    override fun onAdImpression() {
-        //Handle ad impression here
-    }
-}).build().loadAd(nativeConfiguration3.build())
-```
-{% endtab %}
-{% endtabs %}
-
-{% hint style="info" %}
-{% code fullWidth="false" %}
-```
-Make sure you set LayoutParams of your dynamicMediaView in accordance to parent layout herein Linear Layout.
-```
-{% endcode %}
-{% endhint %}
-
-{% tabs %}
-{% tab title="Java" %}
-```javascript
-dynamicMediaView.setLayoutParams(new LinearLayout.LayoutParams(800, 600));
-```
-{% endtab %}
-
-{% tab title="Kotlin" %}
-```python
-dynamicMediaView.layoutParams = LinearLayout.LayoutParams(800,600)
-```
-{% endtab %}
-{% endtabs %}

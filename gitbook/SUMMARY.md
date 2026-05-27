@@ -18,7 +18,7 @@
 ## MULTIPLE ADS
 
 * [📪 Carousel Banner Ad](multiple-ads/carousel-banner-ad.md)
-* [📪 Copy of Native Ad](multiple-ads/native-ad.md)
+* [📪 Carousel Native Ad](multiple-ads/native-ad.md)
 
 ## Beta Ad Format's
 
