@@ -15,6 +15,11 @@
 * [📪 Native Ad](how-to-render-an-ad/native-ad.md)
 * [📪 Custom Native Ad](how-to-render-an-ad/native-ad-1.md)
 
+## MULTIPLE ADS
+
+* [📪 Carousel Banner Ad](multiple-ads/carousel-banner-ad.md)
+* [📪 Copy of Native Ad](multiple-ads/native-ad.md)
+
 ## Beta Ad Format's
 
 * [🎨 In-stream Video (Beta)](beta-ad-formats/in-stream-video-beta.md)
