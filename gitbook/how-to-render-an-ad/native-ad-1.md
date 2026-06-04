@@ -87,7 +87,7 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 {% endtab %}
 {% endtabs %}
 
-3. Inside the `onNativeAdLoaded` callback method use `MediationNativeAd` object to display native ad on your defined layout.
+3. Inside the `onNativeRewardAdLoaded` callback method use `MediationNativeRewardAd` object to display native reward ad on your defined layout.
 4. The layout below is only an example. The client app can design the reward UI independently.
 
 {% code overflow="wrap" %}
