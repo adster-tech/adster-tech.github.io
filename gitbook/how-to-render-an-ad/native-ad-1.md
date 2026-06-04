@@ -28,13 +28,12 @@ val configuration = AdRequestConfiguration.builder(context, "Your_placement_name
 
 {% tabs %}
 {% tab title="Java" %}
-```java
-AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
+<pre class="language-java"><code class="lang-java">AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     @Override
     public void onNativeRewardAdLoaded(@NonNull MediationNativeRewardAd ad) {
         super.onNativeRewardAdLoaded(ad);
-        //Show native reward ad here
-    }
+<strong>        //Show native reward ad here
+</strong>    }
 
     @Override
     public void onFailure(@NonNull AdError adError) {
@@ -56,7 +55,7 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
         // Callback which provides revenue and the network which provided it
     }
 }).build().loadAd(configuration.build());
-```
+</code></pre>
 {% endtab %}
 
 {% tab title="Kotlin" %}
@@ -180,12 +179,12 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 ```
 {% endcode %}
 
-5. The above sample layout can be used with the `MediationNativeAd` object to render an ad as shown in the below example
+5. The above sample layout can be used with the `MediationNativeRewardAd` object to render an ad as shown in the below example
 
 {% tabs %}
 {% tab title="Java" %}
 ```java
-private MediationNativeAd nativeRewardAd;
+private MediationNativeRewardAd nativeRewardAd;
 
 private void displayNativeRewardAd(MediationNativeRewardAd ad) {
     nativeRewardAd = ad;
@@ -265,13 +264,13 @@ protected void onDestroy() {
 
 {% tab title="Kotlin" %}
 ```kotlin
-private var nativeRewardAd: MediationNativeAd? = null
+private var nativeRewardAd: MediationNativeRewardAd? = null
 
-private fun displayNativeRewardAd(ad: MediationNativeAd) {
+private fun displayNativeRewardAd(ad: MediationNativeRewardAd) {
     nativeRewardAd = ad
 
     // Create AdSter MediationNativeAdView object.
-    val adView = MediationNativeAdView(this)
+    val adView = MediationNativeRewardAdView(this)
 
     // Add this layout as a parent to your native reward ad layout.
     val nativeRewardAdView: View = LayoutInflater.from(this)
