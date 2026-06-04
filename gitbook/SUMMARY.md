@@ -13,7 +13,8 @@
 * [📪 Interstitial Ad](how-to-render-an-ad/interstitial-ad.md)
 * [📪 Rewarded Ad](how-to-render-an-ad/rewarded-ad.md)
 * [📪 Native Ad](how-to-render-an-ad/native-ad.md)
-* [📪 Custom Native Ad](how-to-render-an-ad/native-ad-1.md)
+* [📪 Native Reward Ad](how-to-render-an-ad/native-ad-1.md)
+* [📪 Custom Native Ad](how-to-render-an-ad/native-ad-2.md)
 
 ## MULTIPLE ADS
 

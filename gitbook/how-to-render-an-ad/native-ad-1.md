@@ -1,8 +1,8 @@
 ---
-description: Below are the steps to load and show a custom native ad on your app
+description: Below are the steps to load and show a native reward ad on your app
 ---
 
-# 📪 Custom Native Ad
+# 📪 Native Reward Ad
 
 1. Create your `AdRequestConfiguration` as per the below format
 
@@ -31,13 +31,9 @@ val configuration = AdRequestConfiguration.builder(context, "Your_placement_name
 ```java
 AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     @Override
-    public void onNativeCustomFormatAdLoaded(@NonNull MediationNativeCustomFormatAd ad) {
-        super.onNativeCustomFormatAdLoaded(ad);
-        if(ad.getCustomFormatId() == "123456"){
-            // Show native custom format for template Id 123456
-        } else if (ad.getCustomFormatId() == "654321") {
-            // Show native custom format for template Id 654321
-        }
+    public void onNativeRewardAdLoaded(@NonNull MediationNativeRewardAd ad) {
+        super.onNativeRewardAdLoaded(ad);
+        //Show native reward ad here
     }
 
     @Override
@@ -65,15 +61,10 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
 
 {% tab title="Kotlin" %}
 ```kotlin
-AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
-    override fun onNativeCustomFormatAdLoaded(ad: MediationNativeCustomFormatAd) {
-        super.onNativeCustomFormatAdLoaded(ad)
-        //Show native custom format ad here
-        if(ad.getCustomFormatId() == "123456"){
-            // Show native custom format for template Id 123456
-        } else if (ad.getCustomFormatId() == "654321") {
-            // Show native custom format for template Id 654321
-        }
+AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {    
+    override fun onNativeRewardAdLoaded(ad: MediationNativeRewardAd) {
+        super.onNativeRewardAdLoaded(ad)
+        //Show native reward ad here
     }
 
     override fun onFailure(adError: AdError) {
@@ -96,170 +87,257 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 {% endtab %}
 {% endtabs %}
 
-3. Inside the `onNativeCustomFormatAdLoaded` callback method use `MediationNativeCustomFormatAd` object to display custom native ad on your defined layout.
-4. Define your native ad layout, below is just an example of a layout
+3. Inside the `onNativeAdLoaded` callback method use `MediationNativeAd` object to display native ad on your defined layout.
+4. The layout below is only an example. The client app can design the reward UI independently.
 
 {% code overflow="wrap" %}
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-    
-    <!-- Icon Logo -->
-    <ImageView
-      android:id="@+id/iconLogoImageView"
-      android:layout_width="54dp"
-      android:layout_height="54dp"
-      android:visibility="gone"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent"
-      />
-    
-    <!-- choice Logo -->
-    <ImageView
-      android:id="@+id/choiceImageview"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:visibility="visible"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      />
-    
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nativeRewardLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
-    
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Sample Title"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
-    
-    <!-- Body -->
-    <TextView
-        android:id="@+id/bodyTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Sample Body Text"
-        android:textSize="14sp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
-    <TextView
-        android:id="@+id/infoTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="Sample advertiser name"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bodyTextView" />
-    
-    <!-- CTA Button -->
-    <Button
-        android:id="@+id/ctaButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Learn More"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/infoTextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iconLogoImageView"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/advertiserTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    tools:text="Advertiser" />
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="Native Reward Offer" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/mediaView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/bodyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            tools:text="Complete the offer to receive the reward." />
+
+        <Button
+            android:id="@+id/ctaButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:text="Redeem now" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 {% endcode %}
 
-5. The above sample layout can be used with the `MediationNativeCustomFormatAd` object to render an ad as shown in the below example
+5. The above sample layout can be used with the `MediationNativeAd` object to render an ad as shown in the below example
 
 {% tabs %}
 {% tab title="Java" %}
 ```java
-private void displayNativeCustomFormatAd(MediationNativeCustomFormatAd ad){
-  MediationNativeAdView adView =new MediationNativeAdView(this);
-  View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView);
-  TextView title = adView.findViewById(R.id.titleTextView);
-  TextView body = adView.findViewById(R.id.bodyTextView);
-  Button cta = adView.findViewById(R.id.ctaButton);
-  ImageView logo = adView.findViewById(R.id.iconLogoImageView);
-  TextView info = adView.findViewById(R.id.infoTextView);
+private MediationNativeAd nativeRewardAd;
 
-  adView.setBodyView(body);
-  adView.setHeadlineView(title);
-  adView.setCtaView(cta);
-  adView.setLogoView(logo);
-  adView.setAdvertiserView(info);
+private void displayNativeRewardAd(MediationNativeRewardAd ad) {
+    nativeRewardAd = ad;
 
-  logo.setVisibility(View.VISIBLE);
-  Glide.with(getApplicationContext()).load(ad.getImage("Image").getDrawable()).into(logo);
+    // Create AdSter MediationNativeAdView object.
+    MediationNativeRewardAd adView = new MediationNativeRewardAd(this);
 
-  title.setText(ad.getText("Headline"));
-  body.setText(ad.getText("Body"));
-  cta.setText(ad.getText("Calltoaction"));
-  info.setText(ad.getText("Attribution"));
+    // Add this layout as a parent to your native reward ad layout.
+    View nativeRewardAdView = LayoutInflater.from(this)
+            .inflate(R.layout.native_reward_ad_layout, adView, true);
 
-  cta.setOnClickListener(new View.OnClickListener() {
-    @Override
-      public void onClick(View v) {
-        ad.performClick("Calltoaction");
-      }
-  });
-  
-  bannerScroll.addView(nativeAdView);
-  ad.recordImpression();
+    TextView advertiser = adView.findViewById(R.id.advertiserTextView);
+    TextView title = adView.findViewById(R.id.titleTextView);
+    TextView body = adView.findViewById(R.id.bodyTextView);
+    Button cta = adView.findViewById(R.id.ctaButton);
+    ImageView logo = adView.findViewById(R.id.iconLogoImageView);
+    FrameLayout mediaContainer = nativeRewardAdView.findViewById(R.id.mediaView);
+
+    adView.setAdvertiserView(advertiser);
+    adView.setHeadlineView(title);
+    adView.setBodyView(body);
+    adView.setCtaView(cta);
+    adView.setLogoView(logo);
+
+    advertiser.setText(ad.getAdvertiser());
+    title.setText(ad.getHeadLine());
+    body.setText(ad.getBody());
+    cta.setText(ad.getCallToAction());
+
+    if (ad.getLogo() != null) {
+        // Load logo url using any image loading library. Glide is used only as an example.
+        Glide.with(getApplicationContext()).load(ad.getLogo()).into(logo);
+    }
+
+    if (ad.getMediaView() != null) {
+        View mediaView = ad.getMediaView();
+        ViewParent parent = mediaView.getParent();
+        if (parent instanceof ViewGroup) {
+            ((ViewGroup) parent).removeView(mediaView);
+        }
+        mediaContainer.removeAllViews();
+        mediaContainer.addView(mediaView);
+        adView.setMediaView(mediaView);
+    }
+
+    Map<String, View> clickableViews = new HashMap<>();
+    clickableViews.put("headline", title);
+    clickableViews.put("body", body);
+    clickableViews.put("cta", cta);
+    clickableViews.put("advertiser", advertiser);
+
+    // Send views to AdSter SDK for click and impression tracking.
+    ad.trackViews(adView, logo, clickableViews);
+
+    // Set MediationNativeAd object.
+    adView.setNativeRewardAd(ad);
+
+    container.removeAllViews();
+    container.addView(adView);
+
+    if (ad.getHasReward()) {
+        // Optional reward metadata. Client app owns how this reward is displayed or fulfilled.
+        JsonObject reward = ad.getReward();
+    }
+}
+
+@Override
+protected void onDestroy() {
+    if (nativeRewardAd != null) {
+        nativeRewardAd.destroy();
+        nativeRewardAd = null;
+    }
+    super.onDestroy();
 }
 ```
 {% endtab %}
 
 {% tab title="Kotlin" %}
 ```kotlin
-private fun displayNativeCustomFormatAd(ad: MediationNativeCustomFormatAd) {
-  val adView = MediationNativeAdView(this)
-  val nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView)
-  val title: TextView = adView.findViewById(R.id.titleTextView)
-  val body: TextView = adView.findViewById(R.id.bodyTextView)
-  val cta: Button = adView.findViewById(R.id.ctaButton)
-  val logo: ImageView = adView.findViewById(R.id.iconLogoImageView)
-  val info: TextView = adView.findViewById(R.id.infoTextView)
+private var nativeRewardAd: MediationNativeAd? = null
 
-  adView.bodyView = body
-  adView.headlineView = title
-  adView.ctaView = cta
-  adView.logoView = logo
-  adView.advertiserView = info
+private fun displayNativeRewardAd(ad: MediationNativeAd) {
+    nativeRewardAd = ad
 
-  logo.visibility = View.VISIBLE
-  Glide.with(applicationContext).load(ad.getImage("Image").getDrawable()).into(logo)
+    // Create AdSter MediationNativeAdView object.
+    val adView = MediationNativeAdView(this)
 
-  title.text = ad.getText("Headline")
-  body.text = ad.getText("Body")
-  cta.text = ad.getText("Calltoaction")
-  info.text = ad.getText("Attribution")
+    // Add this layout as a parent to your native reward ad layout.
+    val nativeRewardAdView: View = LayoutInflater.from(this)
+        .inflate(R.layout.native_reward_ad_layout, adView, true)
 
-  cta.setOnClickListener {
-    ad.performClick("Calltoaction")
-  }
-  
-  bannerScroll.addView(nativeAdView)
-  ad.recordImpression()
+    val advertiser: TextView = adView.findViewById(R.id.advertiserTextView)
+    val title: TextView = adView.findViewById(R.id.titleTextView)
+    val body: TextView = adView.findViewById(R.id.bodyTextView)
+    val cta: Button = adView.findViewById(R.id.ctaButton)
+    val logo: ImageView = adView.findViewById(R.id.iconLogoImageView)
+    val mediaContainer: FrameLayout = nativeRewardAdView.findViewById(R.id.mediaView)
+
+    adView.advertiserView = advertiser
+    adView.headlineView = title
+    adView.bodyView = body
+    adView.ctaView = cta
+    adView.logoView = logo
+
+    advertiser.text = ad.advertiser
+    title.text = ad.headLine
+    body.text = ad.body
+    cta.text = ad.callToAction
+
+    ad.logo?.let { logoUrl ->
+        // Load logo url using any image loading library. Glide is used only as an example.
+        Glide.with(applicationContext).load(logoUrl).into(logo)
+    }
+
+    ad.mediaView?.let { mediaView ->
+        (mediaView.parent as? ViewGroup)?.removeView(mediaView)
+        mediaContainer.removeAllViews()
+        mediaContainer.addView(mediaView)
+        adView.mediaView = mediaView
+    }
+
+    val clickableViews = hashMapOf<String, View>(
+        "headline" to title,
+        "body" to body,
+        "cta" to cta,
+        "advertiser" to advertiser
+    )
+
+    // Send views to AdSter SDK for click and impression tracking.
+    ad.trackViews(adView, logo, clickableViews)
+
+    // Set MediationNativeAd object.
+    adView.nativeAd = ad
+
+    container.removeAllViews()
+    container.addView(adView)
+
+    if (ad.hasReward) {
+        // Optional reward metadata. Client app owns how this reward is displayed or fulfilled.
+        val reward = ad.reward
+    }
+}
+
+override fun onDestroy() {
+    nativeRewardAd?.destroy()
+    nativeRewardAd = null
+    super.onDestroy()
 }
 ```
 {% endtab %}
 {% endtabs %}
 
 {% hint style="info" %}
-Make sure to call `trackViews` and `setAdvertiserView` method before adding `MediationNativeCustomFormatAd` to the container.
+Make sure to call `trackViews` and set `NativeRewardAd` method before adding `MediationNativeRewardAdView` to the container.
 {% endhint %}
-
-6. Call `MediationNativeCustomFormatAd.destroy` when activity or fragment is getting destroyed.

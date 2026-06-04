@@ -122,5 +122,5 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 {% hint style="info" %}
 `onNativeAdLoaded()` - [Click here](../how-to-render-an-ad/native-ad.md#kotlin) for Rendering implementation\
 `onBannerAdLoaded()` - [Click here](../how-to-render-an-ad/banner-ad.md) for Rendering implementation\
-`onNativeCustomFormatAdLoaded()` - [Click here](../how-to-render-an-ad/native-ad-1.md) for Rendering implementation
+`onNativeCustomFormatAdLoaded()` - [Click here](../how-to-render-an-ad/native-ad-2.md) for Rendering implementation
 {% endhint %}
