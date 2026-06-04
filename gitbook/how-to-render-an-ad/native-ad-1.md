@@ -189,7 +189,7 @@ private MediationNativeRewardAd nativeRewardAd;
 private void displayNativeRewardAd(MediationNativeRewardAd ad) {
     nativeRewardAd = ad;
 
-    // Create AdSter MediationNativeAdView object.
+    // Create AdSter MediationNativeRewardAdView object.
     MediationNativeRewardAd adView = new MediationNativeRewardAd(this);
 
     // Add this layout as a parent to your native reward ad layout.
@@ -239,7 +239,7 @@ private void displayNativeRewardAd(MediationNativeRewardAd ad) {
     // Send views to AdSter SDK for click and impression tracking.
     ad.trackViews(adView, logo, clickableViews);
 
-    // Set MediationNativeAd object.
+    // Set MediationNativeRewardAd object.
     adView.setNativeRewardAd(ad);
 
     container.removeAllViews();
@@ -269,7 +269,7 @@ private var nativeRewardAd: MediationNativeRewardAd? = null
 private fun displayNativeRewardAd(ad: MediationNativeRewardAd) {
     nativeRewardAd = ad
 
-    // Create AdSter MediationNativeAdView object.
+    // Create AdSter MediationNativeRewardAdView object.
     val adView = MediationNativeRewardAdView(this)
 
     // Add this layout as a parent to your native reward ad layout.
@@ -316,7 +316,7 @@ private fun displayNativeRewardAd(ad: MediationNativeRewardAd) {
     // Send views to AdSter SDK for click and impression tracking.
     ad.trackViews(adView, logo, clickableViews)
 
-    // Set MediationNativeAd object.
+    // Set MediationNativeRewardAd object.
     adView.nativeAd = ad
 
     container.removeAllViews()
