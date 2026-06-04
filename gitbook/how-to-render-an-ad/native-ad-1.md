@@ -317,7 +317,7 @@ private fun displayNativeRewardAd(ad: MediationNativeRewardAd) {
     ad.trackViews(adView, logo, clickableViews)
 
     // Set MediationNativeRewardAd object.
-    adView.nativeAd = ad
+    adView.nativeRewardAd = ad
 
     container.removeAllViews()
     container.addView(adView)
