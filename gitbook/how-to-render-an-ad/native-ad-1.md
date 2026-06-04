@@ -24,7 +24,13 @@ val configuration = AdRequestConfiguration.builder(context, "Your_placement_name
 {% endtab %}
 {% endtabs %}
 
-2. Call `loadAd()` method as per below format
+2. Adding PPID to AdRequest
+
+```java
+configuration.publisherProvidedId("YOUR_PPID");
+```
+
+3. Call `loadAd()` method as per below format
 
 {% tabs %}
 {% tab title="Java" %}
@@ -86,8 +92,8 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 {% endtab %}
 {% endtabs %}
 
-3. Inside the `onNativeRewardAdLoaded` callback method use `MediationNativeRewardAd` object to display native reward ad on your defined layout.
-4. The layout below is only an example. The client app can design the reward UI independently.
+4. Inside the `onNativeRewardAdLoaded` callback method use `MediationNativeRewardAd` object to display native reward ad on your defined layout.
+5. The layout below is only an example. The client app can design the reward UI independently.
 
 {% code overflow="wrap" %}
 ```xml
@@ -179,7 +185,7 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
 ```
 {% endcode %}
 
-5. The above sample layout can be used with the `MediationNativeRewardAd` object to render an ad as shown in the below example
+6. The above sample layout can be used with the `MediationNativeRewardAd` object to render an ad as shown in the below example
 
 {% tabs %}
 {% tab title="Java" %}
