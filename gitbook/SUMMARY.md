@@ -29,6 +29,7 @@
 ## Additional Features
 
 * [🎨 Adaptive Banner Ad (Only for GAM)](additional-features/adaptive-banner-ad-only-for-gam.md)
+* [🎨 Collapsible Anchored Adaptive Banner Ad (Only for GAM)](additional-features/collapsible-anchored-adaptive-banner-ad-only-for-gam.md)
 * [🎨 Render Unified Ad (Only for GAM)](additional-features/render-unified-ad-only-for-gam.md)
 * [🎨 How to pass predefined custom targeting values in ad request](additional-features/how-to-pass-predefined-custom-targeting-values-in-ad-request.md)
 * [🎨 How to pass publisher provided identifiers in ad request (PPID)](additional-features/how-to-pass-publisher-provided-identifiers-in-ad-request-ppid.md)

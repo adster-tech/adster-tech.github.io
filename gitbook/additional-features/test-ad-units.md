@@ -6,6 +6,8 @@ Banner (320x50) - <mark style="color:$success;">**`banner_320x50`**</mark>
 
 Banner (300x250) - <mark style="color:$success;">**`banner_300x250`**</mark>
 
+Adaptive Banner - <mark style="color:$success;">**`banner_adaptive`**</mark>
+
 Native - <mark style="color:$success;">**`native`**</mark>&#x20;
 
 Appopen - <mark style="color:$success;">**`appopen`**</mark>&#x20;
