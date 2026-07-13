@@ -217,6 +217,7 @@ private void displayNativeCustomFormatAd(MediationNativeCustomFormatAd ad){
   });
   
   bannerScroll.addView(nativeAdView);
+  ad.trackViewability(adView);
   ad.recordImpression();
 }
 ```
@@ -252,6 +253,7 @@ private fun displayNativeCustomFormatAd(ad: MediationNativeCustomFormatAd) {
   }
   
   bannerScroll.addView(nativeAdView)
+  ad.trackViewability(adView)
   ad.recordImpression()
 }
 ```
