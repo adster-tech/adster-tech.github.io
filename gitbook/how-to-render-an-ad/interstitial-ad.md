@@ -6,10 +6,6 @@ description: Below are the steps to load and show an Interstitial ad on your app
 
 1. Create your `AdRequestConfiguration` as per the below format
 
-```java
-val configuration = AdRequestConfiguration.Companion.builder(context, "Your_placement_name");
-```
-
 {% tabs %}
 {% tab title="Java" %}
 {% code overflow="wrap" %}
