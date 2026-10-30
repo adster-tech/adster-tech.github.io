@@ -233,9 +233,16 @@ private void displayNativeAd(MediationNativeAd ad) {
   // MediaView
   FrameLayout mediaView = nativeAdView.findViewById(R.id.mediaView);
 
-  // If MediaView is present add AdSter's MediaView as a child to given MediaView
-  if (ad.getMediaView() != null) {
-      mediaView.addView(ad.getMediaView());
+  // Read once: the SDK media view renders either image or video content.
+  View media = ad.getMediaView();
+  if (media != null) {
+      if (media.getParent() instanceof ViewGroup) {
+          ((ViewGroup) media.getParent()).removeView(media);
+      }
+      mediaView.removeAllViews();
+      mediaView.addView(media, new FrameLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+      adView.setMediaView(media);
   }
   adView.setBodyView(body);
   adView.setHeadlineView(title);
@@ -251,6 +258,9 @@ private void displayNativeAd(MediationNativeAd ad) {
   // Set native ad elements with data
   title.setText(ad.getHeadLine());
   body.setText(ad.getBody());
+  title.setVisibility(View.VISIBLE);
+  body.setVisibility(View.VISIBLE);
+  info.setVisibility(View.VISIBLE);
   if(ad.getStarRating()!=null){
     ratingBar.setRating(ad.getStarRating().floatValue());
   }
@@ -287,13 +297,18 @@ private fun displayNativeAd(ad: MediationNativeAd) {
   val logo: ImageView = adView.findViewById(R.id.iconLogoImageView)
   val choice: ImageView = adView.findViewById(R.id.choiceImageview)
   val info: TextView = adView.findViewById(R.id.infoTextView)
-  val ratingBar : RaringBar = adView.findViewById(R.id.ratingBar)
+  val ratingBar : RatingBar = adView.findViewById(R.id.ratingBar)
   // MediaView
   val mediaView: FrameLayout = nativeAdView.findViewById(R.id.mediaView)
 
-  // If MediaView is present add AdSter's MediaView as a child to given MediaView
-  if (ad.mediaView != null) {
-      mediaView.addView(ad.mediaView)
+  // Read once: the SDK media view renders either image or video content.
+  val media = ad.mediaView
+  if (media != null) {
+      (media.parent as? ViewGroup)?.removeView(media)
+      mediaView.removeAllViews()
+      mediaView.addView(media, FrameLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+      adView.mediaView = media
   }
 
   adView.bodyView = body
@@ -309,9 +324,12 @@ private fun displayNativeAd(ad: MediationNativeAd) {
   // Set native ad elements with data
   title.text = ad.headLine
   body.text = ad.body
+  title.visibility = View.VISIBLE
+  body.visibility = View.VISIBLE
+  info.visibility = View.VISIBLE
   cta.text = ad.callToAction
   info.text = ad.advertiser
-  starRating?.let { ratingBar.rating = it.toFloat() }
+  ad.starRating?.let { ratingBar.rating = it.toFloat() }
 
   val map = HashMap<String, View>()
   map["headline"] = title
@@ -335,127 +353,98 @@ private fun displayNativeAd(ad: MediationNativeAd) {
 Make sure to call `trackViews` and `setNativeAd` method before adding `MediationNativeAdView` to the container.
 {% endhint %}
 
-{% hint style="info" %}
-```
-If you set attachToRoot as false for further customization of nativeAdView before displaying, make sure you attach it to parent afterwards.
-In the example provided above it is already set to true.
-```
-{% endhint %}
-
-{% tabs %}
-{% tab title="Java" %}
-```javascript
-View nativeAdView = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, false);
-parent.addView(nativeAdView); 
-```
-{% endtab %}
-
-{% tab title="Kotlin" %}
-```kotlin
-val nativeAdView: View = LayoutInflater.from(this).inflate(R.layout.ad_native_layout, adView, true)
-parent.addView(nativeAdView) 
-```
-{% endtab %}
-{% endtabs %}
+If you inflate with `attachToRoot = false`, add the inflated child to `adView` before adding `adView` to the screen container. Keep the SDK media view inside this native ad layout.
 
 6. Call `MediationNativeAd.destroy` when activity or fragment is getting destroyed.
 
-***
+### Media sizing
 
-### Native Ad in Dynamic Layout
+Use a bounded media container, as in the 160dp-high example above, and add the SDK media view with `MATCH_PARENT` width and height. For a dynamic layout, set the container's layout parameters for its parent and follow the same binding sequence: register asset views, call `trackViews`, set `nativeAd`, then attach the ad view. Video preserves its aspect ratio and may have empty space around it.
+
+## Native video playback
+
+These playback controls apply to AdSter-served native video. Keep the SDK-provided `mediaView` in your layout so the SDK can handle playback, controls, and video tracking. Image ads and other networks may return a null `videoController`; always check it. For AdSter custom native video, use `mediaView`, even when `getMediaContent()` is null. Google media content follows the separate GAM path.
+
+The SDK begins preparing video after loading the creative. Playback starts automatically when the media view is attached, has window focus, is shown, has a visible on-screen area, and its rendering surface is ready. It starts muted by default. Keep hardware acceleration enabled for the video view; playback failure falls back to the poster image.
+
+### Start with sound
+
+To start unmuted, call `unmute()` on the main thread in `onNativeAdLoaded`, before your display method attaches the ad view. This also works before the player finishes preparing. Apply the choice to every newly loaded ad; each starts with the muted default.
 
 {% tabs %}
 {% tab title="Java" %}
 ```java
-AdSterAdLoader.Builder builder = new AdSterAdLoader.Builder()
-        .withAdsListener(new MediationAdListener() {
-            @Override
-            public void onNativeAdLoaded(MediationNativeAd ad) {
-                super.onNativeAdLoaded(ad);
-
-                // Instantiating the dynamicMediaView Object
-                FrameLayout dynamicMediaView = new FrameLayout(YourActivity.this);
-
-                // Set the Width and Height based on your requirement
-                dynamicMediaView.setLayoutParams(new LinearLayout.LayoutParams(800, 600));
-
-                if (ad.getMediaView() != null) {
-                    dynamicMediaView.addView(ad.getMediaView());
-                    linearLayout.addView(dynamicMediaView);
-                }
-            }
-
-            @Override
-            public void onFailure(AdError adError) {
-                // Handle failure callback here
-            }
-        })
-        .withAdsEventsListener(new AdEventsListener() {
-            @Override
-            public void onAdClicked() {
-                // Handle ad click here
-            }
-
-            @Override
-            public void onAdImpression() {
-                // Handle ad impression here
-            }
-        });
-
-AdSterAdLoader adLoader = builder.build();
-adLoader.loadAd(nativeConfiguration3.build());
+// Inside onNativeAdLoaded(MediationNativeAd ad), before displaying it:
+com.adster.sdk.mediation.adster.view.AdSterVideoController controller =
+        ad.getVideoController();
+if (controller != null) {
+    controller.unmute(); // Optional: omit this to keep the muted default.
+}
+// Now call your display method to bind and attach the ad.
 ```
 {% endtab %}
 
 {% tab title="Kotlin" %}
 ```kotlin
-AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
-    override fun onNativeAdLoaded(ad: MediationNativeAd) {
-        super.onNativeAdLoaded(ad)
-        //Instantiating the dynamicMediaView Object
-        val dynamicMediaView = FrameLayout(this@YourActivity)
-        //Set the Width and Height based on your requirement
-        dynamicMediaView.layoutParams = LinearLayout.LayoutParams(800,600)
-        if (ad.mediaView != null) {
-            dynamicMediaView.addView(ad.mediaView)
-            linearLayout.addView(dynamicMediaView)
-        }
-    }
-
-    override fun onFailure(adError: AdError) {
-        //Handle failure callback here
-    }
-}).withAdsEventsListener(object : AdEventsListener() {
-    override fun onAdClicked() {
-        //Handle ad click here
-    }
-
-    override fun onAdImpression() {
-        //Handle ad impression here
-    }
-}).build().loadAd(nativeConfiguration3.build())
+// Inside onNativeAdLoaded(ad: MediationNativeAd), before displaying it:
+ad.videoController?.unmute() // Optional: omit this to keep the muted default.
+// Now call your display method to bind and attach the ad.
 ```
 {% endtab %}
 {% endtabs %}
 
-{% hint style="info" %}
-{% code fullWidth="false" %}
-```
-Make sure you set LayoutParams of your dynamicMediaView in accordance to parent layout herein Linear Layout.
-```
-{% endcode %}
-{% endhint %}
+### Control playback
+
+Use `com.adster.sdk.mediation.adster.view.AdSterVideoController` on the main thread. Each method below is an independent action for your UI; do not call them all in sequence.
+
+| API                              | Behavior                                                                               |
+| -------------------------------- | -------------------------------------------------------------------------------------- |
+| `play()`                         | Resumes a paused video when the view can play.                                         |
+| `pause()`                        | Pauses playback until `play()` is called or the viewer resumes using the SDK controls. |
+| `mute()` / `unmute()`            | Changes sound immediately, or stores the choice until preparation finishes.            |
+| `isPlaying` / Java `isPlaying()` | Reports whether the player is currently playing.                                       |
+| `isMuted` / Java `isMuted()`     | Reports the current mute setting.                                                      |
 
 {% tabs %}
 {% tab title="Java" %}
-```javascript
-dynamicMediaView.setLayoutParams(new LinearLayout.LayoutParams(800, 600));
+```java
+com.adster.sdk.mediation.adster.view.AdSterVideoController controller =
+        ad.getVideoController();
+if (controller != null) {
+    controller.pause(); // For example, when your app explicitly pauses this ad.
+}
+// Later, when your app wants to resume:
+// if (controller != null) controller.play();
 ```
 {% endtab %}
 
 {% tab title="Kotlin" %}
-```python
-dynamicMediaView.layoutParams = LinearLayout.LayoutParams(800,600)
+```kotlin
+ad.videoController?.pause() // For example, when your app explicitly pauses this ad.
+// Later, when your app wants to resume:
+// ad.videoController?.play()
+```
+{% endtab %}
+{% endtabs %}
+
+### Lifecycle and cleanup
+
+Retain the loaded ad object and call `destroy()` when replacing it or permanently removing it, including Activity destruction or Fragment `onDestroyView()`. Remove its view and clear your reference. Do not destroy an ad for a temporary pause if you intend to resume it.
+
+{% tabs %}
+{% tab title="Java" %}
+```java
+// When permanently removing the ad (ad is the retained MediationNativeAd):
+ad.destroy();
+// Remove its view from your container and clear your retained ad reference.
+```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+// When permanently removing the ad (ad is the retained MediationNativeAd):
+ad.destroy()
+// Remove its view from your container and clear your retained ad reference.
 ```
 {% endtab %}
 {% endtabs %}

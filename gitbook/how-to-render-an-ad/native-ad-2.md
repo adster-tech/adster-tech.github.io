@@ -33,9 +33,9 @@ AdSterAdLoader.Companion.builder().withAdsListener(new MediationAdListener() {
     @Override
     public void onNativeCustomFormatAdLoaded(@NonNull MediationNativeCustomFormatAd ad) {
         super.onNativeCustomFormatAdLoaded(ad);
-        if(ad.getCustomFormatId() == "123456"){
+        if ("123456".equals(ad.getCustomFormatId())) {
             // Show native custom format for template Id 123456
-        } else if (ad.getCustomFormatId() == "654321") {
+        } else if ("654321".equals(ad.getCustomFormatId())) {
             // Show native custom format for template Id 654321
         }
     }
@@ -174,9 +174,19 @@ AdSterAdLoader.builder().withAdsListener(object : MediationAdListener() {
         android:text="Learn More"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/infoTextView"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- SDK video media; hidden for the image-only fallback -->
+    <FrameLayout
+        android:id="@+id/mediaView"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/ctaButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 {% endcode %}
@@ -201,8 +211,33 @@ private void displayNativeCustomFormatAd(MediationNativeCustomFormatAd ad){
   adView.setLogoView(logo);
   adView.setAdvertiserView(info);
 
-  logo.setVisibility(View.VISIBLE);
-  Glide.with(getApplicationContext()).load(ad.getImage("Image").getDrawable()).into(logo);
+  FrameLayout mediaContainer = adView.findViewById(R.id.mediaView);
+  View media = ad.getMediaView();
+  if (media != null) {
+      // AdSter video: use the supplied view, including its playback controls.
+      if (media.getParent() instanceof ViewGroup) {
+          ((ViewGroup) media.getParent()).removeView(media);
+      }
+      mediaContainer.addView(media, new FrameLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+      mediaContainer.setVisibility(View.VISIBLE);
+      logo.setVisibility(View.GONE);
+  } else if (ad.getMediaContent() != null) {
+      // Preserve the GAM media path; it does not use AdSterVideoController.
+      com.google.android.gms.ads.nativead.MediaView googleMedia =
+          new com.google.android.gms.ads.nativead.MediaView(this);
+      googleMedia.setMediaContent(ad.getMediaContent());
+      mediaContainer.addView(googleMedia, new FrameLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+      mediaContainer.setVisibility(View.VISIBLE);
+      logo.setVisibility(View.GONE);
+  } else {
+      com.google.android.gms.ads.nativead.NativeAd.Image image = ad.getImage("Image");
+      logo.setVisibility(image != null ? View.VISIBLE : View.GONE);
+      if (image != null) {
+          Glide.with(this).load(image.getDrawable()).into(logo);
+      }
+  }
 
   title.setText(ad.getText("Headline"));
   body.setText(ad.getText("Body"));
@@ -240,8 +275,29 @@ private fun displayNativeCustomFormatAd(ad: MediationNativeCustomFormatAd) {
   adView.logoView = logo
   adView.advertiserView = info
 
-  logo.visibility = View.VISIBLE
-  Glide.with(applicationContext).load(ad.getImage("Image").getDrawable()).into(logo)
+  val mediaContainer: FrameLayout = adView.findViewById(R.id.mediaView)
+  val media = ad.mediaView
+  val googleContent = ad.getMediaContent()
+  if (media != null) {
+      // AdSter video: use the supplied view, including its playback controls.
+      (media.parent as? ViewGroup)?.removeView(media)
+      mediaContainer.addView(media, FrameLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+      mediaContainer.visibility = View.VISIBLE
+      logo.visibility = View.GONE
+  } else if (googleContent != null) {
+      // Preserve the GAM media path; it does not use AdSterVideoController.
+      val googleMedia = com.google.android.gms.ads.nativead.MediaView(this)
+      googleMedia.mediaContent = googleContent
+      mediaContainer.addView(googleMedia, FrameLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+      mediaContainer.visibility = View.VISIBLE
+      logo.visibility = View.GONE
+  } else {
+      val image = ad.getImage("Image")
+      logo.visibility = if (image != null) View.VISIBLE else View.GONE
+      image?.let { Glide.with(this).load(it.drawable).into(logo) }
+  }
 
   title.text = ad.getText("Headline")
   body.text = ad.getText("Body")
@@ -261,7 +317,93 @@ private fun displayNativeCustomFormatAd(ad: MediationNativeCustomFormatAd) {
 {% endtabs %}
 
 {% hint style="info" %}
-Make sure to call `trackViews` and `setAdvertiserView` method before adding `MediationNativeCustomFormatAd` to the container.
+For custom native ads, bind assets and click handlers before attaching the view. Call `trackViewability(adView)` and `recordImpression()` when displaying the ad, as shown above.
 {% endhint %}
 
 6. Call `MediationNativeCustomFormatAd.destroy` when activity or fragment is getting destroyed.
+
+## Native video playback
+
+These playback controls apply to AdSter-served native video. Keep the SDK-provided `mediaView` in your layout so the SDK can handle playback, controls, and video tracking. Image ads and other networks may return a null `videoController`; always check it. For AdSter custom native video, use `mediaView`, even when `getMediaContent()` is null. Google media content follows the separate GAM path.
+
+### Start with sound
+
+To start unmuted, call `unmute()` on the main thread in `onNativeCustomFormatAdLoaded`, before your display method attaches the ad view. This also works before the player finishes preparing. Apply the choice to every newly loaded ad; each starts with the muted default.
+
+{% tabs %}
+{% tab title="Java" %}
+```java
+// Inside onNativeCustomFormatAdLoaded(MediationNativeCustomFormatAd ad), before displaying it:
+com.adster.sdk.mediation.adster.view.AdSterVideoController controller =
+        ad.getVideoController();
+if (controller != null) {
+    controller.unmute(); // Optional: omit this to keep the muted default.
+}
+// Now call your display method to bind and attach the ad.
+```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+// Inside onNativeCustomFormatAdLoaded(ad: MediationNativeCustomFormatAd), before displaying it:
+ad.videoController?.unmute() // Optional: omit this to keep the muted default.
+// Now call your display method to bind and attach the ad.
+```
+{% endtab %}
+{% endtabs %}
+
+### Control playback
+
+Use `com.adster.sdk.mediation.adster.view.AdSterVideoController` on the main thread. Each method below is an independent action for your UI; do not call them all in sequence.
+
+| API                              | Behavior                                                                               |
+| -------------------------------- | -------------------------------------------------------------------------------------- |
+| `play()`                         | Resumes a paused video when the view can play.                                         |
+| `pause()`                        | Pauses playback until `play()` is called or the viewer resumes using the SDK controls. |
+| `mute()` / `unmute()`            | Changes sound immediately, or stores the choice until preparation finishes.            |
+| `isPlaying` / Java `isPlaying()` | Reports whether the player is currently playing.                                       |
+| `isMuted` / Java `isMuted()`     | Reports the current mute setting.                                                      |
+
+{% tabs %}
+{% tab title="Java" %}
+```java
+com.adster.sdk.mediation.adster.view.AdSterVideoController controller =
+        ad.getVideoController();
+if (controller != null) {
+    controller.pause(); // For example, when your app explicitly pauses this ad.
+}
+// Later, when your app wants to resume:
+// if (controller != null) controller.play();
+```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+ad.videoController?.pause() // For example, when your app explicitly pauses this ad.
+// Later, when your app wants to resume:
+// ad.videoController?.play()
+```
+{% endtab %}
+{% endtabs %}
+
+### Lifecycle and cleanup
+
+Retain the loaded ad object and call `destroy()` when replacing it or permanently removing it, including Activity destruction or Fragment `onDestroyView()`. Remove its view and clear your reference. Do not destroy an ad for a temporary pause if you intend to resume it.
+
+{% tabs %}
+{% tab title="Java" %}
+```java
+// When permanently removing the ad (ad is the retained MediationNativeCustomFormatAd):
+ad.destroy();
+// Remove its view from your container and clear your retained ad reference.
+```
+{% endtab %}
+
+{% tab title="Kotlin" %}
+```kotlin
+// When permanently removing the ad (ad is the retained MediationNativeCustomFormatAd):
+ad.destroy()
+// Remove its view from your container and clear your retained ad reference.
+```
+{% endtab %}
+{% endtabs %}
